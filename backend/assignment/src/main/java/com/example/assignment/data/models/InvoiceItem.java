@@ -1,4 +1,4 @@
-package com.example.assignment.models;
+package com.example.assignment.data.models;
 
 import javax.persistence.*;
 
@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "invoice_item")
 public class InvoiceItem {
   @EmbeddedId

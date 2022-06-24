@@ -1,4 +1,4 @@
-package com.example.assignment.models;
+package com.example.assignment.data.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,14 +6,13 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity(name = "Actor")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "actor")
 public class Actor {
 

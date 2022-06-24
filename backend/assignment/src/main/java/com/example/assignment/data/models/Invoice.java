@@ -1,4 +1,4 @@
-package com.example.assignment.models;
+package com.example.assignment.data.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,14 +6,13 @@ import java.util.ArrayList;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity(name = "Invoice")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "invoice")
 public class Invoice {
   @Id
