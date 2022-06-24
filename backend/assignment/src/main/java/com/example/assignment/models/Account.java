@@ -10,15 +10,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "User")
+@Entity(name = "Account")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "user")
-public class User {
+@Table(name = "account")
+public class Account {
   @Id
-  @SequenceGenerator(name = "user_squence", sequenceName = "user_squence", allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_squence")
+  @SequenceGenerator(name = "account_squence", sequenceName = "account_squence", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_squence")
   @Column(name = "id", updatable = false)
   private Long id;
 
@@ -34,7 +34,11 @@ public class User {
   @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
   private LocalDateTime updateAt;
 
-  @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = { CascadeType.PERSIST,
+  @OneToMany(mappedBy = "account", orphanRemoval = true, cascade = { CascadeType.PERSIST,
       CascadeType.REMOVE }, fetch = FetchType.LAZY)
-  private final List<Order> orders = new ArrayList<>();
+  private final List<Invoice> invoices = new ArrayList<>();
+
+  // @OneToMany(mappedBy = "account", orphanRemoval = true, cascade = { CascadeType.PERSIST,
+  //     CascadeType.REMOVE }, fetch = FetchType.LAZY)
+  // private final List<Rating> ratings = new ArrayList<>();
 }

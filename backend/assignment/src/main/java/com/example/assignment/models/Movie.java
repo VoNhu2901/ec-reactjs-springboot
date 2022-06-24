@@ -57,20 +57,27 @@ public class Movie {
   @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
   private LocalDateTime updateAt;
 
-  //////
-  private Long languageId;
-
+  
   @OneToMany(mappedBy = "movie", cascade = { CascadeType.PERSIST,
       CascadeType.REMOVE })
-  private final List<OrderItem> orderItems = new ArrayList<>();
+  private final List<InvoiceItem> invoiceItems = new ArrayList<>();
 
   @OneToMany(mappedBy = "movie", cascade = { CascadeType.PERSIST,
       CascadeType.REMOVE })
   private final List<ActorItem> actorItems = new ArrayList<>();
 
-
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "category_movie_fk"))
   private Category category;
+
+  @ManyToOne
+  @JoinColumn(name = "language_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "language_movie_fk"))
+  private Language language;
+
+    // @OneToMany(mappedBy = "movie", cascade = { CascadeType.PERSIST,
+    //     CascadeType.REMOVE })
+    // private final List<Rating> ratings = new ArrayList<>();
+    
   
+
 }

@@ -17,9 +17,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "actor")
 public class Actor {
 
-  @EmbeddedId
-  private ActorItemId id;
-  
+  @Id
+  @SequenceGenerator(name = "actor_squence", sequenceName = "actor_squence", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_squence")
+  @Column(name = "id", updatable = false)
+  private Long id;
 
   @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
   private String firstName;
@@ -44,9 +46,9 @@ public class Actor {
 
   @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
   private LocalDateTime updateAt;
-  
+
   @OneToMany(mappedBy = "movie", cascade = { CascadeType.PERSIST,
       CascadeType.REMOVE })
   private final List<ActorItem> actorItems = new ArrayList<>();
-  
+
 }

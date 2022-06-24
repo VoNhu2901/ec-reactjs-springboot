@@ -1,21 +1,21 @@
-package com.example.assignment.models;
+// package com.example.assignment.models;
 
-import java.io.Serializable;
+// import java.io.Serializable;
 
-import javax.persistence.*;
+// import javax.persistence.*;
 
-import lombok.*;
+// import lombok.*;
 
-@Embeddable
-@Getter
-@Setter
-@NoArgsConstructor
-@EqualsAndHashCode
-public class RatingId implements  Serializable{
-  private static final long serialVersionUID = 1L;
+// @Embeddable
+// @Getter
+// @Setter
+// @NoArgsConstructor
+// @EqualsAndHashCode
+// public class RatingId implements Serializable {
+//   private static final long serialVersionUID = 1L;
 
-  @Column(name = "user_id")
-  private Long userId;
-  @Column(name = "movie_id")
-  private Long movieId;
-}
+//   @Column(name = "account_id")
+//   private Long accountId;
+//   @Column(name = "movie_id")
+//   private Long movieId;
+// }

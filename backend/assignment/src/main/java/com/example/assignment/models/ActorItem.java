@@ -1,6 +1,5 @@
 package com.example.assignment.models;
 
-
 import javax.persistence.*;
 
 import lombok.*;
