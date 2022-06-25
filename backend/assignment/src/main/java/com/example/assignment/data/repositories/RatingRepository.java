@@ -7,5 +7,4 @@
 // public interface RatingRepository extends JpaRepository<RatingRepository, Long> {
 
 
-  
 // }
