@@ -1,4 +1,4 @@
-package com.example.assignment.data.models;
+package com.example.assignment.data.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,19 +10,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Language")
+@Entity(name = "Category")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "language")
-public class Language {
-    @OneToMany(mappedBy = "language", orphanRemoval = true, cascade = {CascadeType.PERSIST,
+@Table(name = "category")
+public class Category {
+    @OneToMany(mappedBy = "category", orphanRemoval = true, cascade = {CascadeType.PERSIST,
             CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private final List<Movie> movies = new ArrayList<>();
     @Id
-    @SequenceGenerator(name = "language_squence", sequenceName = "language_squence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "language_squence")
+    @SequenceGenerator(name = "category_squence", sequenceName = "category_squence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_squence")
     @Column(name = "id", updatable = false)
     private Long id;
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")

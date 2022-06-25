@@ -1,22 +1,22 @@
-package com.example.assignment.data.models;
+package com.example.assignment.data.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
-public class ActorItemId implements Serializable {
+public class InvoiceItemId implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "invoice_id")
+    private Long invoiceId;
     @Column(name = "movie_id")
     private Long movieId;
-
-    @Column(name = "actor_id")
-    private Long actorId;
-
 }

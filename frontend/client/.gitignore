@@ -23,6 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 
+
 # Hide
 /doc
 README.md
+*.md

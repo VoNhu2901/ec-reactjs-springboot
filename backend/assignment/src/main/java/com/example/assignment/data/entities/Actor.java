@@ -1,9 +1,6 @@
-package com.example.assignment.data.models;
+package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Actor")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Table(name = "actor")
 public class Actor {
 
@@ -28,19 +22,17 @@ public class Actor {
     private Long id;
     @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
     private String firstName;
-    @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "last_name", nullable = true, columnDefinition = "TEXT")
     private String lastName;
-    @Column(name = "email", nullable = false, columnDefinition = "TEXT")
-    private String email;
-    @Column(name = "password", nullable = false, columnDefinition = "TEXT")
-    private String password;
     @Column(name = "avatar", nullable = true, columnDefinition = "TEXT")
     private String avatar;
-    @Column(name = "phone", nullable = false, columnDefinition = "TEXT")
-    private String phone;
     @Column(name = "create_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDateTime createAt;
     @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDateTime updateAt;
+
+    public Actor createActor(Actor actor) {
+        return null;
+    }
 
 }

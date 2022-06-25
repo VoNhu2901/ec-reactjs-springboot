@@ -1,5 +1,7 @@
 package com.example.assignment.services.impl;
 
-public class CategoryServiceImpl {
+import com.example.assignment.services.CategoryService;
+
+public class CategoryServiceImpl implements CategoryService {
 
 }
