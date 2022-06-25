@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 
 import MovieList from "./components/movie/MovieList";
@@ -90,6 +90,7 @@ function App() {
         </div>
       </section>
     </Fragment>
+
   );
 }
 
