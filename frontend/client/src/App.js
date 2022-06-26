@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import "swiper/css";
 
+
 import { Route, Routes } from "react-router-dom";
 
 import Main from "./components/layout/Main";
@@ -28,6 +29,7 @@ function App() {
         </Route>
       </Routes>
     </Fragment>
+
   );
 }
 

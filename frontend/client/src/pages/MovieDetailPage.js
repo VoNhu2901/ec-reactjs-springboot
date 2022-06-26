@@ -110,8 +110,8 @@ function MovieVideos() {
   if(!results || results.length === 0) return null;
   return (
     <>
-      <div className="py-10">
-        <h2 className="text-3xl font-medium mb-10 mt-10">Trailers</h2>
+        <h2 className="text-3xl font-medium mb-2 mt-10 text-center">Trailers</h2>
+      <div className="py-10 flex items-center justify-center">
         <div className="flex flex-col gap-10">
           {results.slice(0, 2).map((item) => (
             <div key={item.id}>

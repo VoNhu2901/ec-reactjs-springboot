@@ -11,7 +11,6 @@ const Banner = () => {
   );
   // const movies = data ? data.results : [];
   const movies = data?.results || [];
-  console.log("🚀 ~ file: Banner.js ~ line 14 ~ Banner ~ movies", movies)
   return (
     <>
       <section className="banner h-[500px] page-container mb-20 select-none overflow-hidden">
