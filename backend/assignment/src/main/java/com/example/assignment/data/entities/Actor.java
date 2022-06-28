@@ -19,20 +19,18 @@ public class Actor {
     @SequenceGenerator(name = "actor_squence", sequenceName = "actor_squence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_squence")
     @Column(name = "id", updatable = false)
+    @OrderBy("id")
     private Long id;
-    @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name", nullable = true, columnDefinition = "TEXT")
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "avatar", nullable = true, columnDefinition = "TEXT")
+    @Column(name = "avatar")
     private String avatar;
-    @Column(name = "create_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(name = "create_at",columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDateTime createAt;
-    @Column(name = "update_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Column(name = "update_at", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDateTime updateAt;
 
-    public Actor createActor(Actor actor) {
-        return null;
-    }
-
+   
 }
