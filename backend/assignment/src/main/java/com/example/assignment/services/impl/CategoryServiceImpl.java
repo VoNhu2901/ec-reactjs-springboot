@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.assignment.data.entities.Category;
 import com.example.assignment.data.repositories.CategoryRepository;
 import com.example.assignment.dto.request.CategoryUpdateDTO;
 import com.example.assignment.dto.response.CategoryResponseDTO;
-import com.example.assignment.exceptions.CategoryNotFoundException;
+import com.example.assignment.exceptions.ResourceFoundException;
 import com.example.assignment.services.CategoryService;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
@@ -30,7 +32,7 @@ private final CategoryRepository categoryRepository;
     @Override
     public CategoryResponseDTO getCategoryById(Long id) {
         return modelMapper.map(
-                this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("category Not Found")),
+                this.categoryRepository.findById(id).orElseThrow(() -> new ResourceFoundException("Category Not Found")),
                 CategoryResponseDTO.class);
     }
 
@@ -52,9 +54,16 @@ private final CategoryRepository categoryRepository;
     @Override
     public CategoryResponseDTO deleteCategory(Long id) {
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException("category Not Found"));
+                .orElseThrow(() -> new ResourceFoundException("Category Not Found"));
 
         this.categoryRepository.delete(category);
         return modelMapper.map(category, CategoryResponseDTO.class);
+    }
+
+    @Override
+    public CategoryResponseDTO getCategoryByName(String name) {
+        return modelMapper.map(
+                this.categoryRepository.findByName(name),
+                CategoryResponseDTO.class);
     }
 }

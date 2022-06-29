@@ -17,6 +17,7 @@ public class InvoiceItemId implements Serializable {
 
     @Column(name = "invoice_id")
     private Long invoiceId;
+    
     @Column(name = "movie_id")
     private Long movieId;
 }

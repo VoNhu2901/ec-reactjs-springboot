@@ -4,11 +4,10 @@ import com.example.assignment.data.entities.Actor;
 import com.example.assignment.data.repositories.ActorRepository;
 import com.example.assignment.dto.request.ActorUpdateDTO;
 import com.example.assignment.dto.response.ActorResponseDTO;
-import com.example.assignment.exceptions.ActorNotFoundException;
+import com.example.assignment.exceptions.ResourceFoundException;
 import com.example.assignment.services.ActorService;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public ActorResponseDTO getActorById(Long id) {
         return modelMapper.map(
-                this.actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException("Actor Not Found")),
+                this.actorRepository.findById(id).orElseThrow(() -> new ResourceFoundException("Actor Not Found")),
                 ActorResponseDTO.class);
     }
 
@@ -56,7 +55,7 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public ActorResponseDTO deleteActor(Long id) {
         Actor actor = this.actorRepository.findById(id)
-                .orElseThrow(() -> new ActorNotFoundException("Actor Not Found"));
+                .orElseThrow(() -> new ResourceFoundException("Actor Not Found"));
 
         this.actorRepository.delete(actor);
         return modelMapper.map(actor, ActorResponseDTO.class);

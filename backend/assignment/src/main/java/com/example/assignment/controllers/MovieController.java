@@ -51,4 +51,8 @@ public class MovieController {
     return this.movieService.deleteMovie(id);
   }
 
+  @GetMapping("/title/{title}")
+  List<Movie> getMovieByTitle(@PathVariable("title") String title) {
+    return this.movieService.getMovieByTitle(title);
+  }
 }

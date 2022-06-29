@@ -16,12 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "role")
 public class Role {
-    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST,
-            CascadeType.REMOVE})
+    @OneToMany(mappedBy = "role", cascade = { CascadeType.ALL })
     private final List<RoleItem> roleItems = new ArrayList<>();
+    
     @Id
     @SequenceGenerator(name = "role_squence", sequenceName = "role_squence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_squence")
+    
     @Column(name = "id", updatable = false)
     private Long id;
 

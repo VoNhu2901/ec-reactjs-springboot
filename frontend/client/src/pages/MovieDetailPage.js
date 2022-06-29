@@ -1,18 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
-import { apiKey, fetcher } from "./../config";
-import { Swiper } from 'swiper/react';
-import { SwiperSlide } from 'swiper/react';
-import MovieCard from './../components/movie/MovieCard';
+import { apiKey, fetcher, tmdbAPI } from "../components/apiConfig/config";
+import { Swiper } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
+import MovieCard from "./../components/movie/MovieCard";
 
-// https://api.themoviedb.org/3/movie/{movie_id}?api_key=
 const MovieDetailPage = () => {
   const { movieId } = useParams();
-  const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`,
-    fetcher
-  );
+  const { data, error } = useSWR(tmdbAPI.getMoiveDetails(movieId), fetcher);
 
   if (!data) return null;
   const { backdrop_path, poster_path, title, genres, overview } = data;
@@ -25,13 +21,15 @@ const MovieDetailPage = () => {
           <div
             className="w-full h-full bg-cover bg-no-repeat rounded-lg"
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original/${backdrop_path})`,
+              backgroundImage: `url(${tmdbAPI.imgOriginal(backdrop_path)})`,
+              // backgroundImage: `url(https://image.tmdb.org/t/p/original/${backdrop_path})`,
             }}
           ></div>
         </div>
         <div className="w-full h-[400px] max-w-[800px] mx-auto -mt-[200px] relative z-10 mb-10">
           <img
-            src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+            src={tmdbAPI.imgOriginal(poster_path)}
+            // src={`https://image.tmdb.org/t/p/original/${poster_path}`}
             alt=""
             className="w-full h-full object-cover rounded-xl"
           />
@@ -60,8 +58,26 @@ const MovieDetailPage = () => {
   );
 };
 
+// Utils function
+
+// function MovieMeta({type="videos"}) {
+//   const { movieId } = useParams();
+//   const { data, error } = useSWR(
+//     tmdbAPI.getMoiveMeta(movieId, type),
+//     fetcher
+//   );
+
+//   if (!data) return null;
+//   const { results } = data;
+//   if (!results || results.length === 0) return null;
+//   if (type === "credits") return (
+
+//   )
+      
+// }
+
 function MovieCredits() {
-    return (
+  return (
     <>
       <h2 className="text-center text-3xl mb-10 font-bold">Casts</h2>
       <div className="grid grid-cols-4 gap-5">
@@ -74,19 +90,20 @@ function MovieCredits() {
 function CastItems() {
   const { movieId } = useParams();
   const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`,
+    tmdbAPI.getMoiveMeta(movieId, "credits"),
     fetcher
   );
 
   if (!data) return null;
   const { cast } = data;
-  if(!cast || cast.length === 0) return null;
+  if (!cast || cast.length === 0) return null;
   return (
     <>
       {cast.slice(0, 4).map((item) => (
         <div className="cast-item" key={item.id}>
           <img
-            src={`https://image.tmdb.org/t/p/original/${item.profile_path}`}
+            src={tmdbAPI.imgOriginal(item.profile_path)}
+            // src={`https://image.tmdb.org/t/p/original/${item.profile_path}`}
             alt=""
             className="w-full h-[350px] object-cover rounded-lg mb-3"
           />
@@ -97,20 +114,19 @@ function CastItems() {
   );
 }
 
-
 function MovieVideos() {
   const { movieId } = useParams();
   const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`,
+    tmdbAPI.getMoiveMeta(movieId, "videos"),
     fetcher
   );
 
   if (!data) return null;
   const { results } = data;
-  if(!results || results.length === 0) return null;
+  if (!results || results.length === 0) return null;
   return (
     <>
-        <h2 className="text-3xl font-medium mb-2 mt-10 text-center">Trailers</h2>
+      <h2 className="text-3xl font-medium mb-2 mt-10 text-center">Trailers</h2>
       <div className="py-10 flex items-center justify-center">
         <div className="flex flex-col gap-10">
           {results.slice(0, 2).map((item) => (
@@ -139,15 +155,15 @@ function MovieVideos() {
 }
 
 function MovieSimilar() {
-   const { movieId } = useParams();
-   const { data, error } = useSWR(
-     `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${apiKey}`,
-     fetcher
-   );
+  const { movieId } = useParams();
+  const { data, error } = useSWR(
+    tmdbAPI.getMoiveMeta(movieId, "similar"),
+    fetcher
+  );
 
-   if (!data) return null;
-   const { results } = data;
-   if (!results || results.length === 0) return null;
+  if (!data) return null;
+  const { results } = data;
+  if (!results || results.length === 0) return null;
   return (
     <>
       <div className="py-10">

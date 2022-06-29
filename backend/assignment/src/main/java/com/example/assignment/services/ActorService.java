@@ -2,7 +2,7 @@ package com.example.assignment.services;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import org.springframework.stereotype.Service;
 
 import com.example.assignment.data.entities.Actor;
 import com.example.assignment.dto.request.ActorUpdateDTO;

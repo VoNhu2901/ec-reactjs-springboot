@@ -13,6 +13,7 @@ public class RatingId implements Serializable {
 
     @Column(name = "account_id")
     private Long accountId;
+    
     @Column(name = "movie_id")
     private Long movieId;
 }

@@ -1,11 +1,13 @@
 import React from "react";
 import useSWR from "swr";
-import { fetcher } from "../../config";
-import { SwiperSlide } from 'swiper/react';
-import { Swiper } from 'swiper/react';
+import { fetcher } from "../apiConfig/config";
+import { SwiperSlide } from "swiper/react";
+import { Swiper } from "swiper/react";
+import { useNavigate } from "react-router-dom";
+import Button from "./../button/Button";
 
 const Banner = () => {
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=43730f5bb9f1852e5e560e74083b21d4`,
     fetcher
   );
@@ -15,11 +17,12 @@ const Banner = () => {
     <>
       <section className="banner h-[500px] page-container mb-20 select-none overflow-hidden">
         <Swiper grabCursor="true" slidesPerView={"auto"}>
-          {movies.length > 0 && movies.map((item) => (
-            <SwiperSlide key={item.id}>
-              <BannerItem item={item}></BannerItem>
-            </SwiperSlide>
-          ))}
+          {movies.length > 0 &&
+            movies.map((item) => (
+              <SwiperSlide key={item.id}>
+                <BannerItem item={item}></BannerItem>
+              </SwiperSlide>
+            ))}
         </Swiper>
       </section>
     </>
@@ -27,7 +30,9 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
-  const {title, poster_path } = item;
+  const { id, title, poster_path } = item;
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="w-full h-full relative">
@@ -50,9 +55,13 @@ function BannerItem({ item }) {
               Adventure
             </span>
           </div>
-          <button className="font-bold bg-primary px-6 py-3 rounded-lg">
-            Wacth Now
-          </button>
+          <Button
+            onClick={() => {
+              navigate(`/movie/${id}`);
+            }}
+          >
+            Buy now
+          </Button>
         </div>
       </div>
     </>

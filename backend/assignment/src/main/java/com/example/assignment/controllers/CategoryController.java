@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
-  private CategoryService categoryService;
+  private final CategoryService categoryService;
 
   public CategoryController(CategoryService categoryService) {
     this.categoryService = categoryService;
@@ -47,5 +47,17 @@ public class CategoryController {
   CategoryResponseDTO deleteCategory(@PathVariable("id") Long id) {
     return this.categoryService.deleteCategory(id);
   }
+
+  @GetMapping("name/{name}")
+  @ResponseStatus(HttpStatus.OK)
+  CategoryResponseDTO getCategoryByName(@PathVariable("name") String name) {
+    return this.categoryService.getCategoryByName(name);
+  }
+
+  // @ExceptionHandler(CategoryNotFoundException.class)
+  // @ResponseStatus(HttpStatus.NOT_FOUND)
+  // String handleCategoryNotFound(CategoryNotFoundException e) {
+  //   return e.getMessage();
+  // }
 
 }
