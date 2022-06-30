@@ -1,23 +1,19 @@
 package com.example.assignment.data.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Role")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
 @Table(name = "role")
 public class Role {
     @OneToMany(mappedBy = "role", cascade = { CascadeType.ALL })
-    private final List<RoleItem> roleItems = new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
     
     @Id
     @SequenceGenerator(name = "role_squence", sequenceName = "role_squence", allocationSize = 1)
