@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity(name = "Role")
 @Data
@@ -13,7 +12,7 @@ import java.util.List;
 @Table(name = "role")
 public class Role {
     @OneToMany(mappedBy = "role", cascade = { CascadeType.ALL })
-    private final List<Account> accounts = new ArrayList<>();
+    private final Set<Account> accounts;
     
     @Id
     @SequenceGenerator(name = "role_squence", sequenceName = "role_squence", allocationSize = 1)

@@ -12,4 +12,6 @@ public class AccountResponseDTO {
     private String avatar;
     private String phone;
     private String address;
+    private Boolean enabled;
+
 }

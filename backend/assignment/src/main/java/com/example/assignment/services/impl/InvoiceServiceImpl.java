@@ -10,7 +10,7 @@ import com.example.assignment.data.entities.Invoice;
 import com.example.assignment.data.repositories.InvoiceRepository;
 import com.example.assignment.dto.request.InvoiceUpdateDTO;
 import com.example.assignment.dto.response.InvoiceResponseDTO;
-import com.example.assignment.exceptions.ResourceFoundException;
+import com.example.assignment.exceptions.ResourceNotFoundException;
 import com.example.assignment.services.InvoiceService;
 
 @Service
@@ -33,7 +33,7 @@ public class InvoiceServiceImpl implements InvoiceService {
   @Override
   public InvoiceResponseDTO getInvoiceById(Long id) {
     return modelMapper.map(
-        this.invoiceRepository.findById(id).orElseThrow(() -> new ResourceFoundException("Invoice Not Found")),
+        this.invoiceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invoice Not Found")),
         InvoiceResponseDTO.class);
   }
   
@@ -55,7 +55,7 @@ public class InvoiceServiceImpl implements InvoiceService {
   @Override
   public InvoiceResponseDTO deleteInvoice(Long id) {
     Invoice invoice = this.invoiceRepository.findById(id)
-        .orElseThrow(() -> new ResourceFoundException("Invoice Not Found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Invoice Not Found"));
 
     this.invoiceRepository.delete(invoice);
     return modelMapper.map(invoice, InvoiceResponseDTO.class);

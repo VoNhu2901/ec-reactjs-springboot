@@ -10,7 +10,7 @@ import com.example.assignment.data.entities.Category;
 import com.example.assignment.data.repositories.CategoryRepository;
 import com.example.assignment.dto.request.CategoryUpdateDTO;
 import com.example.assignment.dto.response.CategoryResponseDTO;
-import com.example.assignment.exceptions.ResourceFoundException;
+import com.example.assignment.exceptions.ResourceNotFoundException;
 import com.example.assignment.services.CategoryService;
 
 @Service
@@ -32,7 +32,7 @@ private final CategoryRepository categoryRepository;
     @Override
     public CategoryResponseDTO getCategoryById(Long id) {
         return modelMapper.map(
-                this.categoryRepository.findById(id).orElseThrow(() -> new ResourceFoundException("Category Not Found")),
+                this.categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category Not Found")),
                 CategoryResponseDTO.class);
     }
 
@@ -54,7 +54,7 @@ private final CategoryRepository categoryRepository;
     @Override
     public CategoryResponseDTO deleteCategory(Long id) {
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceFoundException("Category Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category Not Found"));
 
         this.categoryRepository.delete(category);
         return modelMapper.map(category, CategoryResponseDTO.class);

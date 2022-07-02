@@ -10,7 +10,7 @@ import com.example.assignment.data.entities.InvoiceItem;
 import com.example.assignment.data.repositories.InvoiceItemRepository;
 import com.example.assignment.dto.request.InvoiceItemUpdateDTO;
 import com.example.assignment.dto.response.InvoiceItemResponseDTO;
-import com.example.assignment.exceptions.ResourceFoundException;
+import com.example.assignment.exceptions.ResourceNotFoundException;
 import com.example.assignment.services.InvoiceItemService;
 
 @Service
@@ -33,7 +33,7 @@ public class InvoiceItemServiceImpl implements InvoiceItemService {
   @Override
   public InvoiceItemResponseDTO getInvoiceItemById(Long id) {
     return modelMapper.map(
-        this.invoiceItemRepository.findById(id).orElseThrow(() -> new ResourceFoundException("InvoiceItem Not Found")),
+        this.invoiceItemRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("InvoiceItem Not Found")),
         InvoiceItemResponseDTO.class);
   }
   

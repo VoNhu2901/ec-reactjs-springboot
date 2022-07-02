@@ -1,25 +1,19 @@
 package com.example.assignment.exceptions.handlers;
 
-import java.net.http.HttpHeaders;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.example.assignment.dto.response.ErrorResponse;
-import com.example.assignment.exceptions.ResourceFoundException;
+import com.example.assignment.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler({ ResourceFoundException.class })
+  @ExceptionHandler({ ResourceNotFoundException.class })
   protected ResponseEntity<ErrorResponse> handleResourceNotFoundException(RuntimeException exception,
       WebRequest request) {
     ErrorResponse error = new ErrorResponse("404", exception.getMessage());

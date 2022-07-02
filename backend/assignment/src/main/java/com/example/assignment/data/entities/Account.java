@@ -1,6 +1,7 @@
 package com.example.assignment.data.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity(name = "Account")
 @Data
+@NoArgsConstructor
 @Table(name = "account")
 public class Account {
         @OneToMany(mappedBy = "account", orphanRemoval = true, cascade = { CascadeType.ALL })
@@ -16,7 +18,7 @@ public class Account {
         @OneToMany(mappedBy = "account", cascade = { CascadeType.ALL })
         private final List<Rating> ratings = new ArrayList<>();
         @ManyToOne
-        @JoinColumn(name = "role_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "role_account_fk"))
+        @JoinColumn(name = "role_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "role_account_fk"))
         private Role role;
         
         @Id
@@ -49,7 +51,7 @@ public class Account {
         private String address;
 
         @Column(name = "enabled")
-        private boolean enabled = false;
+        private Boolean enabled = false;
        
         @Column(name = "create_at", nullable = true, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
         private LocalDateTime createAt;

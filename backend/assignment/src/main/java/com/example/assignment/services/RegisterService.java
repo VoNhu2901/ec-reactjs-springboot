@@ -1,7 +1,9 @@
 package com.example.assignment.services;
 
-import com.example.assignment.dto.request.RegistrationRequest;
+import com.example.assignment.dto.request.AccountUpdateDTO;
+import com.example.assignment.dto.response.AccountResponseDTO;
 
 public interface RegisterService {
-    String register(RegistrationRequest registrationRequest);
+
+    AccountResponseDTO register(AccountUpdateDTO dto);
 }
