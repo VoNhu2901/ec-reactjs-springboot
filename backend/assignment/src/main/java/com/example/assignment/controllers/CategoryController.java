@@ -1,63 +1,46 @@
 package com.example.assignment.controllers;
 
-import java.util.List;
-
-import com.example.assignment.data.entities.Category;
-import com.example.assignment.dto.request.CategoryUpdateDTO;
-import com.example.assignment.dto.response.CategoryResponseDTO;
+import com.example.assignment.dto.request.CategoryCreateDto;
+import com.example.assignment.dto.response.CategoryResponseDto;
 import com.example.assignment.services.CategoryService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/category")
+@RequestMapping("/category")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CategoryController {
-  private final CategoryService categoryService;
 
-  public CategoryController(CategoryService categoryService) {
-    this.categoryService = categoryService;
-  }
+    private CategoryService categoryService;
 
-  @GetMapping
-  List<Category> getCategories() {
-    return this.categoryService.getAllCategories();
-  }
+    @Autowired
+    public CategoryController(CategoryService service) {
+        this.categoryService = service;
+    }
 
-  @GetMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  CategoryResponseDTO getCategoryById(@PathVariable("id") Long id) {
-    return this.categoryService.getCategoryById(id);
-  }
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public CategoryResponseDto createNewCategory(@Valid @RequestBody CategoryCreateDto dto) {
+        return this.categoryService.createNewCategory(dto);
+    }
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  CategoryResponseDTO createCategory(@RequestBody CategoryUpdateDTO dto) {
-    return this.categoryService.createCategory(dto);
-  }
+    @PutMapping("/{id}")
+    public CategoryResponseDto updateCategory(@Valid @RequestBody CategoryCreateDto dto, @PathVariable("id") int id) {
+        return this.categoryService.updateCategory(id, dto);
+    }
 
-  @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  CategoryResponseDTO updateCategory(@PathVariable("id") Long id, @RequestBody CategoryUpdateDTO dto) {
-    return this.categoryService.updateCategory(id, dto);
-  }
+    @PatchMapping("/{id}")
+    public CategoryResponseDto updateStatusCategory(@PathVariable("id") int id) {
+        return this.categoryService.updateCategoryStatus(id);
+    }
 
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  CategoryResponseDTO deleteCategory(@PathVariable("id") Long id) {
-    return this.categoryService.deleteCategory(id);
-  }
-
-  @GetMapping("name/{name}")
-  @ResponseStatus(HttpStatus.OK)
-  CategoryResponseDTO getCategoryByName(@PathVariable("name") String name) {
-    return this.categoryService.getCategoryByName(name);
-  }
-
-  // @ExceptionHandler(CategoryNotFoundException.class)
-  // @ResponseStatus(HttpStatus.NOT_FOUND)
-  // String handleCategoryNotFound(CategoryNotFoundException e) {
-  //   return e.getMessage();
-  // }
+    @GetMapping()
+    public List<CategoryResponseDto> getAllCategory() {
+        return this.categoryService.getAllCategory();
+    }
 
 }

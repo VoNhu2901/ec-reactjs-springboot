@@ -1,26 +1,17 @@
 package com.example.assignment.services;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import com.example.assignment.data.entities.Category;
-import com.example.assignment.dto.request.CategoryUpdateDTO;
-import com.example.assignment.dto.response.CategoryResponseDTO;
+import com.example.assignment.dto.request.CategoryCreateDto;
+import com.example.assignment.dto.response.CategoryResponseDto;
+
+import java.util.List;
+
 
 public interface CategoryService {
-
-  List<Category> getAllCategories();
-
-  CategoryResponseDTO getCategoryById(Long id);
-
-  CategoryResponseDTO createCategory(CategoryUpdateDTO dto);
-
-  CategoryResponseDTO updateCategory(Long id, CategoryUpdateDTO dto);
-
-  CategoryResponseDTO deleteCategory(Long id);
-
-  CategoryResponseDTO getCategoryByName(String name);
-
-
+    public List<CategoryResponseDto> getAllCategory();
+    public CategoryResponseDto createNewCategory(CategoryCreateDto dto);
+    public CategoryResponseDto updateCategory(int id, CategoryCreateDto dto);
+    public CategoryResponseDto updateCategoryStatus(int id);
+    public Category getCategoryById(int id);
 }

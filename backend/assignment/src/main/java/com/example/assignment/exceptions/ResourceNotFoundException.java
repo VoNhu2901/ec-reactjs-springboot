@@ -1,17 +1,15 @@
 package com.example.assignment.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException {
-  private static final long serialVersionUID = 1L;
+public class ResourceNotFoundException extends RuntimeException{
+    public ResourceNotFoundException(){
+        super();
+    }
 
-  public ResourceNotFoundException() {
-    super();
-  }
+    public ResourceNotFoundException(String message){
+        super(message);
+    }
 
-  public ResourceNotFoundException(String message) {
-    super(message);
-  }
-
-  public ResourceNotFoundException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    public ResourceNotFoundException(String message, Throwable cause){
+        super(message, cause);
+    }
 }
