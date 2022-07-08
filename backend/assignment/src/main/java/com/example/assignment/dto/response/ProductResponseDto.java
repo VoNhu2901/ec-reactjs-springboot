@@ -17,7 +17,7 @@ public class ProductResponseDto {
     private Date createDate;
 
     /**
-     * 
+     *
      */
     public ProductResponseDto() {
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import MovieList from './../components/movie/MovieList';
-import Banner from './../components/banner/Banner';
+// import Banner from './../components/banner/Banner';
 
 const HomePage = () => {
   return (

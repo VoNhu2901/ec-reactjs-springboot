@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/image")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductImageController {
-    
+
     @Autowired
     private ProductImageService productImageService;
 

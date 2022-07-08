@@ -22,14 +22,14 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private ModelMapper modelMapper;
-    private CategoryRepository categoryRepository;
-    private ProductImageRepository productImageRepository;
+    private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
+    private final CategoryRepository categoryRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper,
-            CategoryRepository categoryRepository, ProductImageRepository productImageRepository) {
+                              CategoryRepository categoryRepository, ProductImageRepository productImageRepository) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.categoryRepository = categoryRepository;
@@ -51,9 +51,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto getProductById(int id) {
-        Optional<Product> productOptional =  this.productRepository.findById(id);
-        if(productOptional.isPresent()){
-            Product product  = productOptional.get();
+        Optional<Product> productOptional = this.productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
             return modelMapper.map(product, ProductResponseDto.class);
         }
         throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
@@ -63,12 +63,13 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductByRate() {
         return null;
     }
+
     @Override
     public List<Product> getProductByCategory(int cateId) {
         return null;
     }
-    
-	@Override
+
+    @Override
     public List<ProductResponseDto> getProductOnTrading() {
         List<Product> lProducts = this.productRepository.findByStatus(Utils.PRODUCT_TRADING);
         if (lProducts.isEmpty()) {
@@ -140,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> productOptional = this.productRepository.findById(id);
         Category category = this.categoryRepository.findById(productCreateDto.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException());
-                
+
         if (productOptional.isPresent()) {
             Product pro = productOptional.get();
             pro.setUpdateDate();
@@ -159,5 +160,5 @@ public class ProductServiceImpl implements ProductService {
         }
         throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
-    
+
 }

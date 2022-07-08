@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductImageServiceImpl implements ProductImageService {
 
-    private ProductImageRepository productImageRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Autowired
-    public ProductImageServiceImpl(ProductImageRepository repository){
+    public ProductImageServiceImpl(ProductImageRepository repository) {
         this.productImageRepository = repository;
     }
 
@@ -24,5 +24,5 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     }
 
-    
+
 }

@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
 
     public JwtAuthTokenFilter(JwtUtils jwtUtils, UserDetailsService userDetailsService) {
@@ -48,7 +48,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            System.err.println("Cannot set user authentication: "+ e.getMessage());
+            System.err.println("Cannot set user authentication: " + e.getMessage());
         }
 
         filterChain.doFilter(request, response);
@@ -58,7 +58,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
         String headerAuth = request.getHeader("Authorization");
 
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7, headerAuth.length());
+            return headerAuth.substring(7);
         }
 
         return null;

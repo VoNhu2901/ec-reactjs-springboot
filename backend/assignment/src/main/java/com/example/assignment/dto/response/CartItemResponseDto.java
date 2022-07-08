@@ -9,10 +9,9 @@ public class CartItemResponseDto {
     private double price;
     private int quantity;
 
-    
 
     /**
-     * 
+     *
      */
     public CartItemResponseDto() {
     }

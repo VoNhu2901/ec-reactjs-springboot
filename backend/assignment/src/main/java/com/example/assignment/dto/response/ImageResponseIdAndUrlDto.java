@@ -5,7 +5,7 @@ public class ImageResponseIdAndUrlDto {
     private String imgUrl;
 
     /**
-     * 
+     *
      */
     public ImageResponseIdAndUrlDto() {
     }

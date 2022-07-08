@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Map;
 
 public class Error {
-    private String code;
-    private String message;
     @JsonInclude(Include.NON_NULL)
     Map<String, String> validationErrors;
-    
+    private String code;
+    private String message;
+
     public Error() {
     }
 
@@ -23,7 +23,6 @@ public class Error {
         this.message = message;
     }
 
-    
 
     /**
      * @param code
@@ -77,5 +76,5 @@ public class Error {
     public void setValidationErrors(Map<String, String> validationErrors) {
         this.validationErrors = validationErrors;
     }
-    
+
 }

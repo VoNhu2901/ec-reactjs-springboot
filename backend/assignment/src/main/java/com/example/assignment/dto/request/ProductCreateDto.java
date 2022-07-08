@@ -9,7 +9,7 @@ public class ProductCreateDto {
     private String[] images;
 
     /**
-     * 
+     *
      */
     public ProductCreateDto() {
     }
@@ -23,7 +23,7 @@ public class ProductCreateDto {
      * @param images
      */
     public ProductCreateDto(String name, String description, int amount, double price, int categoryId,
-            String[] images) {
+                            String[] images) {
         this.name = name;
         this.description = description;
         this.amount = amount;

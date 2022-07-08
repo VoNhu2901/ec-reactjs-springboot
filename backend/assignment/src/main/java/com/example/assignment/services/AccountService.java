@@ -7,11 +7,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface AccountService {
-    public List<AccountResponseDto> getAllAccount();
+    List<AccountResponseDto> getAllAccount();
 
-    public AccountResponseDto getAccountById(int id);
+    AccountResponseDto getAccountById(int id);
 
-    public ResponseEntity<?> deleteAccount(int id);
+    ResponseEntity<?> deleteAccount(int id);
 
-    public ResponseEntity<?> updateAccount(int id, RegisterRequestDto dto);
+    ResponseEntity<?> updateAccount(int id, RegisterRequestDto dto);
 }

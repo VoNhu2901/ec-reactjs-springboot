@@ -3,7 +3,7 @@ package com.example.assignment.dto.request;
 import javax.validation.constraints.NotBlank;
 
 public class CategoryCreateDto {
-    
+
     @NotBlank(message = "Category name is required")
     private String cateName;
 
@@ -38,6 +38,5 @@ public class CategoryCreateDto {
         this.cateDescription = cateDescription;
     }
 
-    
-    
+
 }

@@ -3,11 +3,13 @@ package com.example.assignment.dto.response;
 public class CategoryResponseIdAndNameDto {
     private int id;
     private String name;
+
     /**
-     * 
+     *
      */
     public CategoryResponseIdAndNameDto() {
     }
+
     /**
      * @param id
      * @param name
@@ -16,24 +18,28 @@ public class CategoryResponseIdAndNameDto {
         this.id = id;
         this.name = name;
     }
+
     /**
      * @return the id
      */
     public int getId() {
         return id;
     }
+
     /**
      * @param id the id to set
      */
     public void setId(int id) {
         this.id = id;
     }
+
     /**
      * @return the name
      */
     public String getName() {
         return name;
     }
+
     /**
      * @param name the name to set
      */
@@ -41,5 +47,5 @@ public class CategoryResponseIdAndNameDto {
         this.name = name;
     }
 
-    
+
 }

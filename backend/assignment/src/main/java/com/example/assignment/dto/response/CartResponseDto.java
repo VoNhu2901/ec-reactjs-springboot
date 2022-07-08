@@ -3,8 +3,8 @@ package com.example.assignment.dto.response;
 import java.util.List;
 
 public class CartResponseDto {
-    private int id;
     List<CartItemResponseDto> items;
+    private int id;
 
     /**
      * @return the id

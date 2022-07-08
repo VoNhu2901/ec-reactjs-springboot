@@ -1,11 +1,17 @@
 package com.example.assignment.data.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category {
@@ -35,116 +41,25 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> product;
 
-    
-    public Category() {
-        // default con
-    }
-    
-    /**
-     * @param id
-     */
-    public Category(int id) {
-        this.id = id;
-    }
 
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the createDate
-     */
     public Date getCreateDate() {
         return createDate;
     }
 
-    /**
-     * @param createDate the createDate to set
-     */
+
     public void setCreateDate() {
         this.createDate = new Date();
     }
 
-    /**
-     * @return the updateDate
-     */
+
     public Date getUpdateDate() {
         return updateDate;
     }
 
-    /**
-     * @param updateDate the updateDate to set
-     */
+
     public void setUpdateDate() {
         this.updateDate = new Date();
     }
 
-    /**
-     * @return the product
-     */
-    public Set<Product> getProduct() {
-        return product;
-    }
 
-    /**
-     * @param product the product to set
-     */
-    public void setProduct(Set<Product> product) {
-        this.product = product;
-    }
-    
-    /**
-     * @return the status
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-
-    
 }

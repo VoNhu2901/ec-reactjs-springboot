@@ -4,6 +4,10 @@ import com.example.assignment.data.entities.Product;
 import com.example.assignment.dto.request.ProductCreateDto;
 import com.example.assignment.dto.response.ProductResponseDto;
 import com.example.assignment.services.ProductService;
+import com.example.assignment.utils.Utils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +25,30 @@ public class ProductController {
     @GetMapping()
     public List<ProductResponseDto> getProductOnTrading() {
         return this.productService.getProductOnTrading();
-    } 
+    }
 
     @GetMapping("/all")
+    @Operation(summary = Utils.GET_LIST + Utils.PRODUCT)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = Utils.GET_LIST + Utils.PRODUCT + Utils.SUCCESS),
+            @ApiResponse(responseCode = "404", description = Utils.NOT_FOUND + Utils.PRODUCT)
+    })
     public List<ProductResponseDto> getAllProduct() {
-        return this.productService.getAllProduct(); 
-    } 
+        return this.productService.getAllProduct();
+    }
 
     @GetMapping("/{id}")
+    @Operation(summary = Utils.GET_ONE + Utils.PRODUCT)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = Utils.GET_ONE + Utils.PRODUCT + Utils.SUCCESS),
+            @ApiResponse(responseCode = "404", description = Utils.NOT_FOUND + Utils.PRODUCT)
+    })
     public ProductResponseDto getProductById(@PathVariable("id") int id) {
         return this.productService.getProductById(id);
     }
 
     @GetMapping("/top")
-    public List<Product> getProductByRate(){
+    public List<Product> getProductByRate() {
         return this.productService.getProductByRate();
     }
 
@@ -45,7 +59,7 @@ public class ProductController {
 
     /**
      * Create new product
-     * 
+     *
      * @param productData
      * @return
      */
@@ -65,7 +79,7 @@ public class ProductController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductResponseDto updateProduct(@PathVariable("id") int id,
-            @RequestBody ProductCreateDto productCreateDto) {
+                                            @RequestBody ProductCreateDto productCreateDto) {
         return this.productService.updateProduct(id, productCreateDto);
     }
 }

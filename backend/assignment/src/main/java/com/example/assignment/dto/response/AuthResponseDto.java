@@ -8,7 +8,7 @@ public class AuthResponseDto {
     private String accessToken;
 
     /**
-     * 
+     *
      */
     public AuthResponseDto() {
     }

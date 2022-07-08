@@ -6,28 +6,47 @@ import java.util.Set;
 
 public class Utils {
 
-    public static final String JWT_SECRET = "Rookie_Batch_5";
-    public static final int JWT_EXP = 840000;
+    //    JWT
+    public static final String JWT_SECRET = "assignmentSecretKey";
+    public static final long JWT_EXP = 86400000; // 24 * 60 * 60 * 1000
 
+    //    Throw Message
     public static final Boolean PRODUCT_TRADING = true;
-    public static final Boolean PRODUCT_STOP_TRADE = false;
-
     public static final String CATEGORY_ACTIVE = "Active";
-    public static final String CATEGORY_DEACTIVATE = "DEACTIVATE";
-    public static final String PRODUCT_NOT_FOUND = "Product Not Found";
-    public static final String NO_PRODUCT = "No Products Were Found";
+    public static final String CATEGORY_DEACTIVATE = "Deactive";
+    public static final String PRODUCT_NOT_FOUND = "Product.not.found";
+    public static final String NO_PRODUCT = "No.products.were.found";
+    public static final String NO_CART = "No.product.in.cart";
+    public static final String CREATE_ORDER = "Ordered.has.been.created";
+    public static final String NO_ORDER = "No.order.founded.with.that.account";
+    public static final String NO_ACCOUNT = "No.account.were.found";
+    public static final String ACC_UPDATE = "Account.updated.successfully";
+    public static final String ACC_DELETE = "Change.status.of.account.to.false";
+    public static final String ACCOUNT_BLOCK = "Account.blocked";
+    public static final String ACCOUNT_NOT_FOUND = "Account.not.found.or.wrong.username";
+    public static final String WRONG_PASS = "Wrong.password";
+    public static final String USERNAME_EXITS = "Username.already.exists";
 
-    public static final String NO_CART = "No product in cart";
-    public static final String CREATE_ORDER = "Ordered has been created";
-    public static final String NO_ORDER = "No order founded with that account";
-    public static final String NO_ACCOUNT = "No Account Were Found";
-    public static final String ACC_UPDATE = "Account updated successfully";
-    public static final String ACC_DELETE = "Change status of account to FALSE.";
-    public static final String ACCOUNT_BLOCK = "Account Blocked.";
-    public static final String ACCOUNT_NOT_FOUND = "Account not found, Wrong Username";
-    public static final String WRONG_PASS = "Authentication fail: Wrong password";
-    public static final String USERNAME_EXITS = "Username already exists";
-    public static final String ROLE_NOT_FOUND = "Role is not found, Unable to grant permission";
+    //    Operation Swagger
+    public static final String CREATE_NEW = "Create.new.";
+    public static final String LOGIN = "Login.";
+    public static final String PUT = "Put.";
+    public static final String PATCH = "Patch.";
+    public static final String GET_LIST = "Get.list.";
+    public static final String GET_ONE = "Get.one.by.id.";
+    public static final String DELETE = "Delete.";
+    public static final String NOT_FOUND = "Not.found.";
+    public static final String SUCCESS = ".success";
+
+    ///
+    public static final String CATEGORY = "Category";
+    public static final String CART = "Cart";
+    public static final String PRODUCT_IMG = "Product.image";
+    public static final String ORDER = "Order";
+    public static final String PRODUCT = "Product";
+    public static final String ACCOUNT = "Account";
+    public static final String AUTH = "Authentication";
+
 
     public static double rate(Set<ProductRate> listRate) {
         double result = 0.0;
