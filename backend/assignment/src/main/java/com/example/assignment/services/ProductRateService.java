@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductRateService {
-    ResponseEntity<?> createNewRate(ProductRateCreateDto dto);
+    public ResponseEntity<?> createNewRate(ProductRateCreateDto dto);
 
-    List<ProductRateResponseDto> getRatesByProductId(int proId, boolean status);
+    public List<ProductRateResponseDto> getRatesByProductId(int proId, boolean status);
 
-    ResponseEntity<?> changeStatus(int rateId);
+    public ResponseEntity<?> changeStatus(int rateId);
 
 }

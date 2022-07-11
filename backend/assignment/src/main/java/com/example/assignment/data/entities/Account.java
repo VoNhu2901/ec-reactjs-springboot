@@ -1,8 +1,6 @@
 package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,11 +8,13 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+@Table(name = "account", uniqueConstraints = { @UniqueConstraint(columnNames = "username") })
 public class Account {
 
     @Id
@@ -58,4 +58,10 @@ public class Account {
     private Set<Ordered> orders;
 
 
+    public Account(int accId) {
+        this.accId = accId;
+    }
+
+
+    
 }

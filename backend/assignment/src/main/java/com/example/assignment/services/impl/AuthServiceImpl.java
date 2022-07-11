@@ -20,14 +20,14 @@ import java.util.Date;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder encoder;
-    private final JwtUtils jwtUtils;
-    private final ModelMapper modelMapper;
+    private AccountRepository accountRepository;
+    private PasswordEncoder encoder;
+    private JwtUtils jwtUtils;
+    private ModelMapper modelMapper;
 
     @Autowired
     public AuthServiceImpl(AccountRepository accountRepository,
-                           PasswordEncoder passwordEncoder, JwtUtils jwtUtils, ModelMapper modelMapper) {
+            PasswordEncoder passwordEncoder, JwtUtils jwtUtils, ModelMapper modelMapper) {
         this.accountRepository = accountRepository;
         this.encoder = passwordEncoder;
         this.jwtUtils = jwtUtils;

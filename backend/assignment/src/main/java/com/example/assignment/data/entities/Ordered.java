@@ -1,17 +1,17 @@
 package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Ordered")
 public class Ordered {
@@ -36,5 +36,11 @@ public class Ordered {
     @ManyToOne
     @JoinColumn(name = "acc_id")
     private Account account;
+
+
+    public Ordered(int orderId) {
+        this.orderId = orderId;
+    }
+
 
 }

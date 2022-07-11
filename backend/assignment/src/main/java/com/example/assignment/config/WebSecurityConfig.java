@@ -60,8 +60,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                .antMatchers("/product/all").hasAnyAuthority("ADMIN")
-                .antMatchers("/category", "/category/**").hasAnyAuthority("USER")
+//                .antMatchers("/product/all").hasAnyAuthority("ADMIN")
+//                .antMatchers("/category", "/category/**").hasAnyAuthority("USER")
                 .anyRequest().permitAll();
 
         return httpSecurity.build();

@@ -3,6 +3,7 @@ package com.example.assignment.controllers;
 import com.example.assignment.dto.request.ProductRateCreateDto;
 import com.example.assignment.dto.response.ProductRateResponseDto;
 import com.example.assignment.services.ProductRateService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Tag(name = "Rating Resources")
 @RestController
 @RequestMapping("/api/v1/rate")
 @CrossOrigin(origins = "*", maxAge = 3600)

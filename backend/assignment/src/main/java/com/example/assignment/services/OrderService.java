@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface OrderService {
-    ResponseEntity<?> createNewOrder(OrderCreateDto dto);
+    public ResponseEntity<?> createNewOrder(OrderCreateDto dto);
 
-    List<OrderResponseDto> getAllOrderByAccId(int id);
+    public List<OrderResponseDto> getAllOrderByAccId(int id);
 
-    List<OrderResponseDto> getAllOrder();
+    public List<OrderResponseDto> getAllOrder();
 
-    ResponseEntity<?> updateStatusOrder(int orderId, String status);
-
+    public ResponseEntity<?> updateStatusOrder(int orderId, String status);
+    
 }

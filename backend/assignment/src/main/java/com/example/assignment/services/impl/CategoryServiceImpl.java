@@ -9,6 +9,8 @@ import com.example.assignment.services.CategoryService;
 import com.example.assignment.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,5 +83,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(int id) {
         return this.categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException());
+    }
+
+    @Override
+    public ResponseEntity<HttpStatus> deleteCategoryById(int id) {
+        this.categoryRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }

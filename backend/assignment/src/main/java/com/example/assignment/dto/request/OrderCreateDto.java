@@ -1,35 +1,16 @@
 package com.example.assignment.dto.request;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderCreateDto {
     private int cartId;
     private int accId;
 
-    /**
-     * @return the cartId
-     */
-    public int getCartId() {
-        return cartId;
-    }
 
-    /**
-     * @param cartId the cartId to set
-     */
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
-
-    /**
-     * @return the accId
-     */
-    public int getAccId() {
-        return accId;
-    }
-
-    /**
-     * @param accId the accId to set
-     */
-    public void setAccId(int accId) {
-        this.accId = accId;
-    }
 
 }

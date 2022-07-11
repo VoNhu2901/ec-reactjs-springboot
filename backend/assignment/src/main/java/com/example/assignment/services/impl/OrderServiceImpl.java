@@ -27,15 +27,15 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
-    private final AccountRepository accountRepository;
-    private final CartRepository cartRepository;
+    private OrderRepository orderRepository;
+    private ProductRepository productRepository;
+    private ModelMapper modelMapper;
+    private AccountRepository accountRepository;
+    private CartRepository cartRepository;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository, ModelMapper mapper,
-                            AccountRepository accountRepository, CartRepository cartRepository) {
+            AccountRepository accountRepository, CartRepository cartRepository) {
         this.modelMapper = mapper;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;

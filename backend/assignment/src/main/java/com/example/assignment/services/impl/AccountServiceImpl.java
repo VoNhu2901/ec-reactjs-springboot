@@ -22,13 +22,13 @@ import java.util.List;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private final AccountRepository accountRepository;
-    private final ModelMapper mapper;
-    private final PasswordEncoder encoder;
+    private AccountRepository accountRepository;
+    private ModelMapper mapper;
+    private PasswordEncoder encoder;
 
     @Autowired
     public AccountServiceImpl(AccountRepository accountRepository, ModelMapper modelMapper,
-                              PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.mapper = modelMapper;
         this.encoder = passwordEncoder;
@@ -50,6 +50,7 @@ public class AccountServiceImpl implements AccountService {
 
         return result;
     }
+
 
     @Override
     public AccountResponseDto getAccountById(int id) {

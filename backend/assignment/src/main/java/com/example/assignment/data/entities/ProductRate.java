@@ -1,17 +1,17 @@
 package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "product_rate")
 public class ProductRate {
@@ -42,6 +42,11 @@ public class ProductRate {
     @ManyToOne
     @JoinColumn(name = "pro_id")
     private Product product;
+
+
+    public ProductRate(int id) {
+        this.id = id;
+    }
 
 
 }

@@ -1,16 +1,16 @@
 package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product {
@@ -22,7 +22,8 @@ public class Product {
     @Column(name = "product_name")
     private String name;
 
-    @Column(name = "description")
+//    @Lob
+    @Column(name = "description", length = 5000)
     private String description;
 
     @Column(name = "price")
@@ -50,11 +51,12 @@ public class Product {
     @JoinColumn(name = "cate_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     private Set<ProductRate> productRates;
 
-    public Date getCreateDate() {
-        return createDate;
+
+    public Product(int proId) {
+        this.proId = proId;
     }
 
 
@@ -62,14 +64,9 @@ public class Product {
         this.createDate = new Date();
     }
 
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-
     public void setUpdateDate() {
         this.updateDate = new Date();
     }
+
 
 }

@@ -1,17 +1,17 @@
 package com.example.assignment.data.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "category")
 public class Category {
@@ -24,7 +24,7 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "create_date")
@@ -41,9 +41,10 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> product;
 
+    
 
-    public Date getCreateDate() {
-        return createDate;
+    public Category(int id) {
+        this.id = id;
     }
 
 
@@ -52,14 +53,19 @@ public class Category {
     }
 
 
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-
     public void setUpdateDate() {
         this.updateDate = new Date();
     }
 
+    public Category(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Category(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
 
 }

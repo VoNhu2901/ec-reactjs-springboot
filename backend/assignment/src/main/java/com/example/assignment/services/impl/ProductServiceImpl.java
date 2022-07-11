@@ -22,14 +22,14 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
-    private final CategoryRepository categoryRepository;
-    private final ProductImageRepository productImageRepository;
+    private ProductRepository productRepository;
+    private ModelMapper modelMapper;
+    private CategoryRepository categoryRepository;
+    private ProductImageRepository productImageRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper,
-                              CategoryRepository categoryRepository, ProductImageRepository productImageRepository) {
+            CategoryRepository categoryRepository, ProductImageRepository productImageRepository) {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
         this.categoryRepository = categoryRepository;
@@ -51,25 +51,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto getProductById(int id) {
-        Optional<Product> productOptional = this.productRepository.findById(id);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            return modelMapper.map(product, ProductResponseDto.class);
-        }
-        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
-    }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Did not find product with id = " + id));
+        ProductResponseDto productResponseDto = modelMapper.map(product, ProductResponseDto.class);
+        return productResponseDto;
 
-    @Override
-    public List<Product> getProductByRate() {
-        return null;
+//        Optional<Product> productOptional =  this.productRepository.findById(id);
+//        if(productOptional.isPresent()){
+//            Product product  = productOptional.get();
+//            return modelMapper.map(product, ProductResponseDto.class);
+//        }
+//        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
 
     @Override
     public List<Product> getProductByCategory(int cateId) {
         return null;
     }
-
-    @Override
+    
+	@Override
     public List<ProductResponseDto> getProductOnTrading() {
         List<Product> lProducts = this.productRepository.findByStatus(Utils.PRODUCT_TRADING);
         if (lProducts.isEmpty()) {
@@ -138,11 +139,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto updateProduct(int id, ProductCreateDto productCreateDto) {
-        Optional<Product> productOptional = this.productRepository.findById(id);
+        Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND)));
         Category category = this.categoryRepository.findById(productCreateDto.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException());
+                .orElseThrow(() -> new ResourceNotFoundException("Category.not.found"));
+                
 
-        if (productOptional.isPresent()) {
             Product pro = productOptional.get();
             pro.setUpdateDate();
             pro.setCategory(category);
@@ -157,8 +158,6 @@ public class ProductServiceImpl implements ProductService {
 
             return modelMapper.map(newProduct, ProductResponseDto.class);
 
-        }
-        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
 
 }
