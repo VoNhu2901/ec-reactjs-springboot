@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { fetcher } from "../apiConfig/config";
 import { SwiperSlide } from "swiper/react";
 import { Swiper } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import Button from "./../button/Button";
+import axios from "axios";
 
 const Banner = () => {
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=43730f5bb9f1852e5e560e74083b21d4`,
-    fetcher
-  );
-  // const movies = data ? data.results : [];
-  const movies = data?.results || [];
+const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/product/all");
+        console.log(response.data);
+        setMovies(response.data)
+      } catch (error) {
+        console.log(error.message);
+      }
+    })();
+  }, []);
+
+  // const { data } = useSWR(
+  //   `https://api.themoviedb.org/3/movie/upcoming?api_key=43730f5bb9f1852e5e560e74083b21d4`,
+  //   fetcher
+  // );
+  // const movies = data?.results || [];
+
   return (
     <>
       <section className="banner h-[500px] page-container mb-20 select-none overflow-hidden">

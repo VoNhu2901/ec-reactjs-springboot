@@ -1,5 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 
+// https://ecommerce-rookie.herokuapp.com/
+
 const axiosClient = axios.create({
   baseURL: "http://local:8000/api",
   headers: {
