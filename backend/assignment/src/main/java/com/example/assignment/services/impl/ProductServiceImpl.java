@@ -8,6 +8,7 @@ import com.example.assignment.data.repositories.ProductImageRepository;
 import com.example.assignment.data.repositories.ProductRepository;
 import com.example.assignment.dto.request.ProductCreateDto;
 import com.example.assignment.dto.response.ProductResponseDto;
+import com.example.assignment.dto.response.ProductSimpleResponseDto;
 import com.example.assignment.exceptions.ResourceNotFoundException;
 import com.example.assignment.services.ProductService;
 import com.example.assignment.utils.Utils;
@@ -39,6 +40,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponseDto> getAllProduct() {
         List<Product> lProducts = this.productRepository.findAll();
+        if(lProducts.isEmpty()){
+            throw new ResourceNotFoundException("Product.list.not.found");
+        }
         List<ProductResponseDto> result = new ArrayList<>();
         for (Product product : lProducts) {
             ProductResponseDto newProduct = modelMapper.map(product, ProductResponseDto.class);
@@ -51,37 +55,45 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto getProductById(int id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Did not find product with id = " + id));
-        ProductResponseDto productResponseDto = modelMapper.map(product, ProductResponseDto.class);
-        return productResponseDto;
-
-//        Optional<Product> productOptional =  this.productRepository.findById(id);
-//        if(productOptional.isPresent()){
-//            Product product  = productOptional.get();
-//            return modelMapper.map(product, ProductResponseDto.class);
-//        }
-//        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
+        Optional<Product> productOptional =  this.productRepository.findById(id);
+        if(productOptional.isPresent()){
+            Product product  = productOptional.get();
+            ProductResponseDto res = new ProductResponseDto();
+            modelMapper.map(product, res);
+            res.setRate(Utils.rate(product.getProductRates()));
+            return res;
+        }
+        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
 
     @Override
-    public List<Product> getProductByCategory(int cateId) {
+    public List<Product> getProductByRate() {
         return null;
     }
-    
-	@Override
-    public List<ProductResponseDto> getProductOnTrading() {
+    @Override
+    public List<ProductSimpleResponseDto> getProductByCategory(int cateId) {
+        Category category = this.categoryRepository.findById(cateId).orElseThrow(ResourceNotFoundException::new);
+
+        List<ProductSimpleResponseDto> result = new ArrayList<>();
+        List<Product> listProduct = this.productRepository.findByCategoryAndStatus(category, true);
+        for (Product product : listProduct) {
+            ProductSimpleResponseDto res = new ProductSimpleResponseDto();
+            result.add(res.build(product));
+        }
+        return result;
+    }
+
+    @Override
+    public List<ProductSimpleResponseDto> getProductOnTrading() {
         List<Product> lProducts = this.productRepository.findByStatus(Utils.PRODUCT_TRADING);
         if (lProducts.isEmpty()) {
             throw new ResourceNotFoundException(Utils.NO_PRODUCT);
         }
 
-        List<ProductResponseDto> result = new ArrayList<>();
+        List<ProductSimpleResponseDto> result = new ArrayList<>();
         for (Product product : lProducts) {
-            ProductResponseDto productDto = modelMapper.map(product, ProductResponseDto.class);
-            productDto.setRate(Utils.rate(product.getProductRates()));
-            result.add(productDto);
+            ProductSimpleResponseDto res = new ProductSimpleResponseDto();
+            result.add(res.build(product));
         }
         return result;
     }
@@ -100,12 +112,10 @@ public class ProductServiceImpl implements ProductService {
 
         // get category
         Category category = this.categoryRepository.findById(productCreateDto.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException());
+                .orElseThrow(ResourceNotFoundException::new);
 
         Product newProduct = new Product();
         newProduct.setCategory(category);
-        newProduct.setCreateDate();
-        newProduct.setUpdateDate();
         newProduct.setName(productCreateDto.getName());
         newProduct.setDescription(productCreateDto.getDescription());
         newProduct.setAmount(productCreateDto.getAmount());
@@ -127,7 +137,6 @@ public class ProductServiceImpl implements ProductService {
             Product product = productOptional.get();
             Boolean tempStatus = product.getStatus();
             product.setStatus(!tempStatus);
-            product.setUpdateDate();
 
             product = this.productRepository.save(product);
             return modelMapper.map(product, ProductResponseDto.class);
@@ -139,13 +148,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto updateProduct(int id, ProductCreateDto productCreateDto) {
-        Optional<Product> productOptional = Optional.ofNullable(this.productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND)));
+        Optional<Product> productOptional = this.productRepository.findById(id);
         Category category = this.categoryRepository.findById(productCreateDto.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category.not.found"));
-                
+                .orElseThrow(ResourceNotFoundException::new);
 
+        if (productOptional.isPresent()) {
             Product pro = productOptional.get();
-            pro.setUpdateDate();
             pro.setCategory(category);
             pro.setName(productCreateDto.getName());
             pro.setDescription(productCreateDto.getDescription());
@@ -158,6 +166,7 @@ public class ProductServiceImpl implements ProductService {
 
             return modelMapper.map(newProduct, ProductResponseDto.class);
 
+        }
+        throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
-
 }

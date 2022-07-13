@@ -3,6 +3,7 @@ package com.example.assignment.controllers;
 import com.example.assignment.data.entities.Product;
 import com.example.assignment.dto.request.ProductCreateDto;
 import com.example.assignment.dto.response.ProductResponseDto;
+import com.example.assignment.dto.response.ProductSimpleResponseDto;
 import com.example.assignment.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 @Tag(name = "Products Resources",
         description = "Permit to access / change all the available products")
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/v1/product")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductController {
 
@@ -22,8 +23,8 @@ public class ProductController {
     private ProductService productService;
 
 
-    @GetMapping("/trending")
-    public List<ProductResponseDto> getProductOnTrading() {
+    @GetMapping("/category/all")
+    public List<ProductSimpleResponseDto> getProductOnTrading() {
         return this.productService.getProductOnTrading();
     }
 
@@ -37,19 +38,21 @@ public class ProductController {
         return this.productService.getProductById(id);
     }
 
-
-    @GetMapping("/category/{cateId}")
-    public List<Product> getProductByCategory(@PathVariable("cateId") int cate) {
-        return this.productService.getProductByCategory(cate);
+    @GetMapping("/top")
+    public List<Product> getProductByRate() {
+        return this.productService.getProductByRate();
     }
 
+    @GetMapping("/category/{cateId}")
+    public List<ProductSimpleResponseDto> getProductByCategory(@PathVariable("cateId") int cate) {
+        return this.productService.getProductByCategory(cate);
+    }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponseDto createNewProduct(@RequestBody ProductCreateDto productData) {
         return this.productService.createNewProduct(productData);
     }
-
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

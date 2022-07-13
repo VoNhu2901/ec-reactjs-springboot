@@ -51,12 +51,14 @@ public class Utils {
     public static double rate(Set<ProductRate> listRate) {
         double result = 0.0;
         if (listRate.isEmpty()) {
-            return 1.0;
+            return 0.0;
         }
 
         // calculate average of rate
-        result = 5.0;
-        return result;
+        for(ProductRate rate: listRate){
+            result += rate.getRate();
+        }
+        return result/listRate.size();
     }
 
 }

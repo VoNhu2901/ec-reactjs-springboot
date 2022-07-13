@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -68,12 +67,6 @@ public class CategoryController {
     })
     public List<CategoryResponseDto> getAllCategory() {
         return this.categoryService.getAllCategory();
-    }
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCategoryById(@PathVariable("id") int id) {
-        return this.categoryService.deleteCategoryById(id);
     }
 
 }

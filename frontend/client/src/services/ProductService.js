@@ -1,33 +1,33 @@
 import { API_ROUTES } from 'utils/ApiRouteConstants';
 import request from './../utils/request';
 
-export const getAllProducts = async () => {
-  try {
-    const response = await request.get(API_ROUTES.PRODUCT_ALL);
-    // return response.data;
-    console.log("🚀 ~ file: ProductService.js ~ line 8 ~ getAllProducts ~ response", response)
-  }
-  catch (error) {
-    console.log(error);
-  }
+import React from 'react';
+
+const ProductService = {
+  getAllProducts: async () => {
+    const response = await request.get(API_ROUTES.GET_ALL_PRODUCTS);
+    return response;
+  },
+  getProductById: async (id) => {
+    const response = await request.get(API_ROUTES.GET_PRODUCT_BY_ID + id);
+    return response;
+  },
+  getProductByCategory: async (categoryId) => {
+    const response = await request.get(API_ROUTES.GET_PRODUCT_BY_CATEGORY + categoryId);
+    return response;
+  },
+  updateProduct: async (product) => {
+    const response = await request.put(API_ROUTES.UPDATE_PRODUCT, product);
+    return response;
+  },
+  createProduct: async (product) => {
+    const response = await request.post(API_ROUTES.CREATE_PRODUCT, product);
+    return response;
+  },
+  deleteProduct: async (id) => {
+    const response = await request.delete(API_ROUTES.DELETE_PRODUCT + id);
+    return response;
+  }  
 }
 
-// export const getProductById = async (id) => {
-//   try {
-//     const response = await request.get(API_ROUTES.PRODUCT_BY_ID + id);
-//     return response.data;
-//   }
-//   catch (error) {
-//     console.log(error);
-//   }
-// }
-
-// export const getProductByName = async (name) => {
-//   try {
-//     const response = await request.get(API_ROUTES.PRODUCT_BY_NAME + name);
-//     return response.data;
-//   }
-//   catch (error) {
-//     console.log(error);
-//   }
-// }
+export default ProductService;

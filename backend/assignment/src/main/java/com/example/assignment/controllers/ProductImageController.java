@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Product Image Resources")
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/api/v1/image")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ProductImageController {
 

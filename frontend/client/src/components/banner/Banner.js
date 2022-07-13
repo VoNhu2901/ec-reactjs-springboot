@@ -5,17 +5,17 @@ import { SwiperSlide } from "swiper/react";
 import { Swiper } from "swiper/react";
 import { useNavigate } from "react-router-dom";
 import Button from "./../button/Button";
-import axios from "axios";
+import ProductService from "./../../services/ProductService";
 
 const Banner = () => {
-const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get("http://localhost:8080/product/all");
+        const response = await ProductService.getAllProducts();
         console.log(response.data);
-        setMovies(response.data)
+        setMovies(response.data);
       } catch (error) {
         console.log(error.message);
       }
@@ -45,7 +45,7 @@ const [movies, setMovies] = useState([]);
 };
 
 function BannerItem({ item }) {
-  const { id, title, poster_path } = item;
+  const { id, name, productImages, category } = item;
   const navigate = useNavigate();
 
   return (
@@ -53,21 +53,15 @@ function BannerItem({ item }) {
       <div className="w-full h-full relative">
         <div className="overplay absolute inset-0 bg-gradient-to-t from-black rounded-lg"></div>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+          src={productImages[0].imgUrl}
           alt="img"
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-fill rounded-lg"
         />
         <div className="absolute left-5 bottom-5 w-full text-white">
-          <h2 className="font-bold text-3xl mb-3">{title}</h2>
+          <h2 className="font-bold text-3xl mb-3">{name}</h2>
           <div className="flex items-center gap-3 mb-8">
             <span className="border border-white px-4 py-2 rounded-md">
-              Adventure
-            </span>
-            <span className="border border-white px-4 py-2 rounded-md">
-              Adventure
-            </span>
-            <span className="border border-white px-4 py-2 rounded-md">
-              Adventure
+              {category.name}
             </span>
           </div>
           <Button

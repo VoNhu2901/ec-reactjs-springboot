@@ -55,18 +55,4 @@ public class Product {
     private Set<ProductRate> productRates;
 
 
-    public Product(int proId) {
-        this.proId = proId;
-    }
-
-
-    public void setCreateDate() {
-        this.createDate = new Date();
-    }
-
-    public void setUpdateDate() {
-        this.updateDate = new Date();
-    }
-
-
 }

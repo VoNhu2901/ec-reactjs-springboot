@@ -32,4 +32,5 @@ public class ProductResponseDto {
         this.amount = amount;
         this.status = status;
     }
+
 }

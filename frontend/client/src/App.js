@@ -7,6 +7,7 @@ import Banner from "./components/banner/Banner";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviePage = lazy(() => import("./pages/MoviePage"));
 const MovieDetailPage = lazy(() => import("./pages/MovieDetailPage"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
               path="/movie/:movieId"
               element={<MovieDetailPage></MovieDetailPage>}
             ></Route>
+            <Route path="/category" element={<CategoryPage></CategoryPage>}></Route>
             <Route path="*" element={<>Not Found 404</>}></Route>
           </Route>
         </Routes>
