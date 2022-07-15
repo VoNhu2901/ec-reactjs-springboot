@@ -51,10 +51,10 @@ public class Account {
     @Column(name = "role")
     private String role;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Cart> carts;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Ordered> orders;
 
 

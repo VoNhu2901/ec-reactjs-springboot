@@ -6,14 +6,14 @@ import com.example.assignment.data.repositories.ProductRateRepository;
 import com.example.assignment.data.repositories.ProductRepository;
 import com.example.assignment.dto.request.ProductRateCreateDto;
 import com.example.assignment.dto.response.ProductRateResponseDto;
-import com.example.assignment.dto.response.SuccessResponse;
+import com.example.assignment.exceptions.ResourceAlreadyExistsException;
 import com.example.assignment.exceptions.ResourceNotFoundException;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.services.ProductRateService;
 import com.example.assignment.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,22 +33,24 @@ public class ProductRateServiceImpl implements ProductRateService {
     private ModelMapper modelMapper;
 
     @Override
-    public ResponseEntity<?> createNewRate(ProductRateCreateDto dto) {
-
-        // TODO change this
-        // check account nay da review product nay chua
-        Product pro = productRepository.findById(dto.getProId()).orElseThrow(() -> new ResourceNotFoundException());
-        Optional<ProductRate> pRate = productRateRepository.findByAccIdAndProduct(dto.getAccId(), pro);
-        if (pRate.isPresent()) {
-            // throw new ()
+    public MessageResponse createNewRate(ProductRateCreateDto dto) {
+        Product product = productRepository.findById(dto.getProId()).orElseThrow(() -> new ResourceNotFoundException());
+        Optional<ProductRate> productRate = productRateRepository.findByAccIdAndProduct(dto.getAccId(), product);
+        if (productRate.isPresent()) {
+            throw new ResourceAlreadyExistsException("You have commented on this product before.");
         }
-        this.productRateRepository.save(modelMapper.map(dto, ProductRate.class));
-        return ResponseEntity.ok(new SuccessResponse(HttpStatus.CREATED, "Create successfully"));
+        ProductRate newRate = new ProductRate();
+        newRate.setAccId(dto.getAccId());
+        newRate.setComment(dto.getComment());
+        newRate.setProduct(product);
+        newRate.setRate(dto.getRate());
+        this.productRateRepository.save(newRate);
+        return new MessageResponse(HttpStatus.CREATED, "Create successfully");
     }
 
     @Override
     public List<ProductRateResponseDto> getRatesByProductId(int proId, boolean status) {
-        List<ProductRate> lProductRates = new ArrayList<>();
+        List<ProductRate> lProductRates;
         if (status) {
             lProductRates = this.productRateRepository.findByStatus(true);
         } else {
@@ -60,14 +62,14 @@ public class ProductRateServiceImpl implements ProductRateService {
         }
 
         List<ProductRateResponseDto> result = new ArrayList<>();
-        for (ProductRate pro : lProductRates) {
-            result.add(modelMapper.map(pro, ProductRateResponseDto.class));
+        for (ProductRate product : lProductRates) {
+            result.add(modelMapper.map(product, ProductRateResponseDto.class));
         }
         return result;
     }
 
     @Override
-    public ResponseEntity<?> changeStatus(int rateId) {
+    public MessageResponse changeStatus(int rateId) {
         ProductRate productRateOptional = this.productRateRepository.findById(rateId)
                 .orElseThrow(() -> new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND));
 
@@ -75,9 +77,8 @@ public class ProductRateServiceImpl implements ProductRateService {
         productRateOptional.setStatus(!oldStatus);
         this.productRateRepository.save(productRateOptional);
 
-        return ResponseEntity.ok(
-                new SuccessResponse(HttpStatus.OK,
-                        "Change status have Id: " + rateId + " to " + !oldStatus + " successfully"));
+        return new MessageResponse(HttpStatus.OK,
+                "Change status have Id: " + rateId + " to " + !oldStatus + " successfully");
     }
 
 }

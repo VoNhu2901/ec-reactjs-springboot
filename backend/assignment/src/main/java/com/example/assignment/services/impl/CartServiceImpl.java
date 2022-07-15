@@ -7,16 +7,19 @@ import com.example.assignment.data.repositories.AccountRepository;
 import com.example.assignment.data.repositories.CartItemRepository;
 import com.example.assignment.data.repositories.CartRepository;
 import com.example.assignment.dto.request.CartItemCreateDto;
+import com.example.assignment.dto.response.CartItemResponseDto;
 import com.example.assignment.dto.response.CartResponseDto;
-import com.example.assignment.dto.response.SuccessResponse;
 import com.example.assignment.exceptions.ResourceNotFoundException;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.services.CartService;
 import com.example.assignment.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -38,13 +41,29 @@ public class CartServiceImpl implements CartService {
         Cart cart = this.cartRepository.findByAccountAndActive(acc, true);
 
         if (cart == null) {
-            throw new ResourceNotFoundException(Utils.NO_CART);
+            Cart newCart = new Cart();
+            newCart.setAccount(acc);
+            newCart.setActive(true);
+            return modelMapper.map(this.cartRepository.save(newCart), CartResponseDto.class);
+
         }
-        return modelMapper.map(cart, CartResponseDto.class);
+
+        CartResponseDto res = modelMapper.map(cart, CartResponseDto.class);
+
+        Set<CartItemResponseDto> cartItems = new HashSet<>();
+
+        for (CartItem ele : cart.getCartItems()) {
+            CartItemResponseDto dto = modelMapper.map(ele, CartItemResponseDto.class);
+            dto.setName(ele.getProduct().getName());
+            dto.setPrice(ele.getProduct().getPrice());
+            cartItems.add(dto);
+        }
+        res.setCartItems(cartItems);
+        return res;
     }
 
     @Override
-    public ResponseEntity<SuccessResponse> addProductToCart(CartItemCreateDto dto) {
+    public MessageResponse addProductToCart(CartItemCreateDto dto) {
         // check cart is exist
         if (!this.cartRepository.existsById(dto.getCartId())) {
             throw new ResourceNotFoundException(Utils.NO_CART);
@@ -53,11 +72,11 @@ public class CartServiceImpl implements CartService {
         // save
         this.cartItemRepository.save(modelMapper.map(dto, CartItem.class));
 
-        return ResponseEntity.ok(new SuccessResponse(HttpStatus.CREATED, "Added product into cart successfully"));
+        return new MessageResponse(HttpStatus.CREATED, "Added product into cart successfully");
     }
 
     @Override
-    public ResponseEntity<SuccessResponse> updateQuantityProduct(CartItemCreateDto dto) {
+    public MessageResponse updateQuantityProduct(CartItemCreateDto dto) {
         CartItem cartItem = this.cartItemRepository.findByCartIdAndProId(dto.getCartId(), dto.getProId());
         if (cartItem == null) {
             throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
@@ -66,11 +85,11 @@ public class CartServiceImpl implements CartService {
         cartItem.setQuantity(dto.getQuantity());
 
         this.cartItemRepository.save(cartItem);
-        return ResponseEntity.ok(new SuccessResponse(HttpStatus.OK, "Changed Quantity"));
+        return new MessageResponse(HttpStatus.OK, "Changed Quantity");
     }
 
     @Override
-    public ResponseEntity<SuccessResponse> deleteProductOutOfCart(int proId, int cartId) {
+    public MessageResponse deleteProductOutOfCart(int proId, int cartId) {
         CartItem cartItem = this.cartItemRepository.findByCartIdAndProId(cartId, proId);
         if (cartItem == null) {
             throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
@@ -78,7 +97,7 @@ public class CartServiceImpl implements CartService {
 
         this.cartItemRepository.delete(cartItem);
 
-        return ResponseEntity.ok(new SuccessResponse(HttpStatus.OK, "Deleted product out of cart"));
+        return new MessageResponse(HttpStatus.OK, "Deleted product out of cart");
     }
-    
+
 }

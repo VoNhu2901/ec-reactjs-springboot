@@ -15,24 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private AccountRepository accountRepository;
-    private PasswordEncoder encoder;
-    private JwtUtils jwtUtils;
-    private ModelMapper modelMapper;
-
     @Autowired
-    public AuthServiceImpl(AccountRepository accountRepository,
-            PasswordEncoder passwordEncoder, JwtUtils jwtUtils, ModelMapper modelMapper) {
-        this.accountRepository = accountRepository;
-        this.encoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-        this.modelMapper = modelMapper;
-    }
+    private AccountRepository accountRepository;
+    @Autowired
+    private PasswordEncoder encoder;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public AuthResponseDto signIn(SignInRequestDto dto) {
@@ -55,8 +48,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponseDto registerUser(RegisterRequestDto dto) {
 
-        // check user exists
-        if (accountRepository.existsByUsername(dto.getUsername())) {
+        if (Boolean.TRUE.equals(accountRepository.existsByUsername(dto.getUsername()))) {
             throw new ResourceAlreadyExistsException(Utils.USERNAME_EXITS);
         }
 
@@ -65,12 +57,11 @@ public class AuthServiceImpl implements AuthService {
         Account account = modelMapper.map(dto, Account.class);
         account.setRole("USER");
         account.setStatus(true);
-        account.setCreateDate(new Date());
-        account.setUpdateDate(new Date());
         this.accountRepository.save(account);
         AuthResponseDto res = modelMapper.map(account, AuthResponseDto.class);
         String access = jwtUtils.generateJwtToken(account);
         res.setAccessToken(access);
+
         return res;
     }
 

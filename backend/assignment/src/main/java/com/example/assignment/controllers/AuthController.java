@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Tag(name = "Authentication Resources")
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     @Operation(summary = Utils.LOGIN + Utils.ACCOUNT)
-    public AuthResponseDto signIn(@RequestBody SignInRequestDto dto) {
+    public AuthResponseDto signIn(@Valid @RequestBody SignInRequestDto dto) {
         return this.authService.signIn(dto);
     }
 
@@ -39,7 +41,7 @@ public class AuthController {
             @ApiResponse(responseCode = "200", description = Utils.CREATE_NEW + Utils.ACCOUNT + Utils.SUCCESS),
             @ApiResponse(responseCode = "404", description = Utils.NOT_FOUND + Utils.ACCOUNT)
     })
-    public AuthResponseDto registerUser(@RequestBody RegisterRequestDto dto) {
+    public AuthResponseDto registerUser(@Valid @RequestBody RegisterRequestDto dto) {
         return this.authService.registerUser(dto);
     }
 }

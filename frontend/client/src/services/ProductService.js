@@ -1,7 +1,6 @@
 import { API_ROUTES } from 'utils/ApiRouteConstants';
 import request from './../utils/request';
 
-import React from 'react';
 
 const ProductService = {
   getAllProducts: async () => {

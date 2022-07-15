@@ -1,11 +1,11 @@
 package com.example.assignment.controllers;
 
 import com.example.assignment.dto.request.ProductRateCreateDto;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.dto.response.ProductRateResponseDto;
 import com.example.assignment.services.ProductRateService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ public class ProductRateController {
     private ProductRateService productRateService;
 
     @PostMapping()
-    public ResponseEntity<?> createNewRate(@Valid @RequestBody ProductRateCreateDto dto) {
+    public MessageResponse createNewRate(@Valid @RequestBody ProductRateCreateDto dto) {
         return this.productRateService.createNewRate(dto);
     }
 
@@ -36,7 +36,7 @@ public class ProductRateController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> changeStatusProductRate(@PathVariable int id) {
+    public MessageResponse changeStatusProductRate(@PathVariable int id) {
         return this.productRateService.changeStatus(id);
     }
 }

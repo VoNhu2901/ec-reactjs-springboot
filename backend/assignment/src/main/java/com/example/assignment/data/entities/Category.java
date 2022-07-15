@@ -2,6 +2,7 @@ package com.example.assignment.data.entities;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -32,7 +33,7 @@ public class Category {
     private Date createDate;
 
     @Column(name = "update_date")
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date updateDate;
 
     @Column(name = "status")
@@ -40,21 +41,10 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> product;
-
     
 
     public Category(int id) {
         this.id = id;
-    }
-
-
-    public void setCreateDate() {
-        this.createDate = new Date();
-    }
-
-
-    public void setUpdateDate() {
-        this.updateDate = new Date();
     }
 
     public Category(int id, String name, String description) {

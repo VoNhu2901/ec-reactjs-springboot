@@ -18,6 +18,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -58,19 +60,19 @@ public class ProductServiceImplTests {
     }
 
     @DisplayName("Test getAllProduct")
-//    @Test
-//    public void getAllProduct_When_RequestValid_Expect_ReturnListProduct(){
-//        List<Product> productList = new ArrayList<>();
-//        when(productRepository.findAll()).thenReturn(productList);
-//        List<ProductResponseDto> expectedList = new ArrayList<>();
-//        for(int i = 0; i<5;i++){
-//            expectedList.add(expected);
-//        }
-//        when(modelMapper.map(product, ProductResponseDto.class)).thenReturn(expected);
-////        verify(expected).setRate(0.0);
-//        List<ProductResponseDto> actual = productServiceImpl.getAllProduct();
-//        assertThat(actual, is(equalTo(expectedList)));
-//    }
+    @Test
+    public void getAllProduct_When_RequestValid_Expect_ReturnListProduct(){
+        List<Product> productList = new ArrayList<>();
+        when(productRepository.findAll()).thenReturn(productList);
+        List<ProductResponseDto> expectedList = new ArrayList<>();
+        for(int i = 0; i<5;i++){
+            expectedList.add(expected);
+        }
+        when(modelMapper.map(product, ProductResponseDto.class)).thenReturn(expected);
+//        verify(expected).setRate(0.0);
+        List<ProductResponseDto> actual = productServiceImpl.getAllProduct();
+        assertThat(actual, is(equalTo(expectedList)));
+    }
 
     @Test
     public void getAllProduct_When_RequestInValid_Then_ThrowsExceptionNotFound() {

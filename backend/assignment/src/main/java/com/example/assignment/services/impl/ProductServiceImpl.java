@@ -23,28 +23,20 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
-    private ModelMapper modelMapper;
-    private CategoryRepository categoryRepository;
-    private ProductImageRepository productImageRepository;
-
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper,
-            CategoryRepository categoryRepository, ProductImageRepository productImageRepository) {
-        this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
-        this.categoryRepository = categoryRepository;
-        this.productImageRepository = productImageRepository;
-    }
+    private ProductRepository productRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductImageRepository productImageRepository;
 
     @Override
     public List<ProductResponseDto> getAllProduct() {
-        List<Product> lProducts = this.productRepository.findAll();
-        if(lProducts.isEmpty()){
-            throw new ResourceNotFoundException("Product.list.not.found");
-        }
+        List<Product> productList = this.productRepository.findAll();
         List<ProductResponseDto> result = new ArrayList<>();
-        for (Product product : lProducts) {
+        for (Product product : productList) {
             ProductResponseDto newProduct = modelMapper.map(product, ProductResponseDto.class);
             // calculate rating of product
             newProduct.setRate(Utils.rate(product.getProductRates()));
@@ -85,13 +77,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductSimpleResponseDto> getProductOnTrading() {
-        List<Product> lProducts = this.productRepository.findByStatus(Utils.PRODUCT_TRADING);
-        if (lProducts.isEmpty()) {
+        List<Product> productList = this.productRepository.findByStatus(Utils.PRODUCT_TRADING);
+        if (productList.isEmpty()) {
             throw new ResourceNotFoundException(Utils.NO_PRODUCT);
         }
 
         List<ProductSimpleResponseDto> result = new ArrayList<>();
-        for (Product product : lProducts) {
+        for (Product product : productList) {
             ProductSimpleResponseDto res = new ProductSimpleResponseDto();
             result.add(res.build(product));
         }

@@ -6,6 +6,7 @@ import com.example.assignment.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -59,9 +60,12 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/**").permitAll()
-//                .antMatchers("/product/all").hasAnyAuthority("ADMIN")
-//                .antMatchers("/category", "/category/**").hasAnyAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/category", "/api/v1/product").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/v1/product/**").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/v1/product/**", "/api/v1/rate/**").hasAnyAuthority("ADMIN")
+                .antMatchers( "/api/v1/image/**", "/api/v1/account").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/cart", "/api/v1/cart/**", "/api/v1/account/**", "/api/v1/rate").hasAnyAuthority("USER")
+
                 .anyRequest().permitAll();
 
         return httpSecurity.build();

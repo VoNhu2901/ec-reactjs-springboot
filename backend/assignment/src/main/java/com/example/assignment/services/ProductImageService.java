@@ -1,8 +1,8 @@
 package com.example.assignment.services;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 
 public interface ProductImageService {
-    public ResponseEntity<HttpStatus> deleteImage(int id);
+    public MessageResponse deleteImage(int id);
+
 }

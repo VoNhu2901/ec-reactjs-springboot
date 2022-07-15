@@ -1,11 +1,11 @@
 package com.example.assignment.controllers;
 
 import com.example.assignment.dto.request.OrderCreateDto;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.dto.response.OrderResponseDto;
 import com.example.assignment.services.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,14 +35,12 @@ public class OrderController {
 
 
     @PostMapping()
-    public ResponseEntity<?> createNewOrder(@Valid @RequestBody OrderCreateDto dto) {
+    public MessageResponse createNewOrder(@Valid @RequestBody OrderCreateDto dto) {
         return this.orderService.createNewOrder(dto);
     }
 
-
     @PatchMapping("/{orderId}/{status}")
-    public ResponseEntity<?> updateStatusOrder(@PathVariable int orderId, @PathVariable String status) {
+    public MessageResponse updateStatusOrder(@PathVariable int orderId, @PathVariable String status) {
         return this.orderService.updateStatusOrder(orderId, status);
     }
-
 }

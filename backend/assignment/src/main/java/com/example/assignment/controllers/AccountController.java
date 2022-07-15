@@ -2,12 +2,12 @@ package com.example.assignment.controllers;
 
 import com.example.assignment.dto.request.RegisterRequestDto;
 import com.example.assignment.dto.response.AccountResponseDto;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.services.AccountService;
 import com.example.assignment.utils.Utils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,12 +34,12 @@ public class AccountController {
 
     @PutMapping("/{id}")
     @Operation(summary = Utils.PUT + Utils.ACCOUNT)
-    public ResponseEntity<?> updateAccount(@PathVariable int id, @Valid @RequestBody RegisterRequestDto dto) {
+    public MessageResponse updateAccount(@PathVariable int id, @Valid @RequestBody RegisterRequestDto dto) {
         return this.accountService.updateAccount(id, dto);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> deleteAccount(@PathVariable int id) {
+    public MessageResponse deleteAccount(@PathVariable int id) {
         return this.accountService.deleteAccount(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.assignment.dto.response;
+package com.example.assignment.exceptions.handlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

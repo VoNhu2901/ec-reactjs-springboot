@@ -1,4 +1,4 @@
-import CategoryCard from 'components/category/CategoryCard';
+import CategoryCard from "components/category/CategoryCard";
 import React from 'react';
 import MovieList from './../components/movie/MovieList';
 // import Banner from './../components/banner/Banner';

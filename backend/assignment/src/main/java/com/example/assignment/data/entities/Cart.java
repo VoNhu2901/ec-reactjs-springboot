@@ -3,6 +3,8 @@ package com.example.assignment.data.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,9 +25,11 @@ public class Cart {
     private boolean active;
 
     @Column(name = "update_date")
+    @UpdateTimestamp
     private Date updateDate;
 
     @Column(name = "create_date")
+    @CreationTimestamp
     private Date createDate;
     
     @ManyToOne

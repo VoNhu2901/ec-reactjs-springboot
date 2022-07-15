@@ -1,6 +1,8 @@
 package com.example.assignment.data.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,8 +24,7 @@ public class Product {
     @Column(name = "product_name")
     private String name;
 
-//    @Lob
-    @Column(name = "description", length = 5000)
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "price")
@@ -36,9 +37,11 @@ public class Product {
     private int amount;
 
     @Column(name = "create_date")
+    @CreationTimestamp
     private Date createDate;
 
     @Column(name = "update_date")
+    @UpdateTimestamp
     private Date updateDate;
 
     @OneToOne(mappedBy = "product")
@@ -53,6 +56,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     private Set<ProductRate> productRates;
-
 
 }

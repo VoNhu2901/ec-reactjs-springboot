@@ -1,5 +1,6 @@
 package com.example.assignment.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,15 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ImageResponseIdAndUrlDto {
     private int id;
     private String imgUrl;
-
-
-    public ImageResponseIdAndUrlDto(int id, String imgUrl) {
-        this.id = id;
-        this.imgUrl = imgUrl;
-    }
 
 
 }
