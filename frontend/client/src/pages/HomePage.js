@@ -1,13 +1,14 @@
 import CategoryCard from "components/category/CategoryCard";
-import React from 'react';
-import MovieList from './../components/movie/MovieList';
+import React from "react";
+import MovieList from "./../components/movie/MovieList";
 // import Banner from './../components/banner/Banner';
 
 const HomePage = () => {
   return (
     <>
-      <div className="flex gap-16">
-        <CategoryCard></CategoryCard>
+      <div className="gap-16">
+       
+
         <div>
           <section className="movies-layout page-container pb-20">
             <h2 className="capitalize text-white mb-10 text-3xl font-bold">

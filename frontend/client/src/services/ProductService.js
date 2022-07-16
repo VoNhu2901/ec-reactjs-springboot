@@ -4,7 +4,23 @@ import request from './../utils/request';
 
 const ProductService = {
   getAllProducts: async () => {
-    const response = await request.get(API_ROUTES.GET_ALL_PRODUCTS);
+    const response = await request.get(API_ROUTES.GET_ALL_PRODUCTS,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
+    return response;
+  },
+  getAllProductTradingByCateId: async (id) => {
+    const response = await request.get(API_ROUTES.GET_ALL_PRODUCT_TRADING_BY_CATE_ID + id,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
     return response;
   },
   getProductById: async (id) => {

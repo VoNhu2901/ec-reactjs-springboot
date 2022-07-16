@@ -1,20 +1,16 @@
 // https://www.loginradius.com/blog/engineering/guest-post/modern-login-signup-form-tailwindcss-react/
+import { API_ROUTES } from 'utils/ApiRouteConstants';
+import request from 'utils/request';
 
-//Handle Login API Integration here
-// const authenticateUser = () =>{
+const AuthService = {
+  login: async (loginFields) => {
+    const response = await request.post(API_ROUTES.LOGIN, loginFields);
+    return response;
+  },
+  register: async (registerFields) => {
+    const response = await request.post(API_ROUTES.REGISTER, registerFields);
+    return response;
+  }
+}
 
-//     const endpoint=`https://api.loginradius.com/identity/v2/auth/login?apikey=${apiKey}`;
-//      fetch(endpoint,
-//          {
-//          method:'POST',
-//          headers: {
-//          'Content-Type': 'application/json'
-//          },
-//          body:JSON.stringify(loginFields)
-//          }).then(response=>response.json())
-//          .then(data=>{
-//             //API Success from LoginRadius Login API
-//          })
-//          .catch(error=>console.log(error))
-
-// }
+export default AuthService;

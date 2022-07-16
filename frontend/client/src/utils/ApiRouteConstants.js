@@ -1,18 +1,23 @@
-export const API_URL = "http://localhost:8080/api/v1/";
+export const API_URL = "http://localhost:8080/api/v1";
 export const API_ROUTES = {
   //product
-  GET_ALL_PRODUCTS: "/product/all",
-  GET_PRODUCT_BY_ID: "/product/:id",
+  GET_ALL_PRODUCTS: "/product/all", //use
+  GET_ALL_PRODUCT_TRADING_BY_CATE_ID: "/product/category/",  //use
+  GET_PRODUCT_BY_ID: "/product/", //use
   GET_PRODUCT_BY_CATEGORY: "/product/category/:categoryId",
   UPDATE_PRODUCT: "/product/update",
   CREATE_PRODUCT: "/product/create",
   DELETE_PRODUCT: "/product/delete/:id",
   //category
-  GET_ALL_CATEGORIES: "/category/all",
+  GET_ALL_CATEGORIES: "/category",
   GET_CATEGORY_BY_ID: "/category/:id",
   UPDATE_CATEGORY: "/category/update",
   CREATE_CATEGORY: "/category/create",
   DELETE_CATEGORY: "/category/delete/:id",
+  //rate
+  GET_ALL_RATES: "/rate/all",
+  ADD_NEW_RATE: "/rate",
+
   //image
   DELETE_PRODUCT_IMAGE: "/product-image/delete/:id",
   //user
@@ -47,13 +52,13 @@ export const API_ROUTES = {
   DELETE_CART_DETAIL: "/cart-detail/delete/:id",
   //order-status
   GET_ALL_ORDER_STATUS: "/order-status/all",
-  
+
   //login
-  LOGIN: "/login",
+  LOGIN: "/auth/signin", //use
   //logout
-  LOGOUT: "/logout",
+  LOGOUT: "/auth/logout",
   //register
-  REGISTER: "/register",
+  REGISTER: "/auth/register", //use
   //user-role
   GET_ALL_USER_ROLES: "/user-role/all",
   GET_USER_ROLE_BY_ID: "/user-role/:id",

@@ -6,7 +6,7 @@ import Banner from "./components/banner/Banner";
 import ProductDetailPage from "pages/ProductDetailPage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const MoviePage = lazy(() => import("./pages/MoviePage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
 const MovieDetailPage = lazy(() => import("./pages/MovieDetailPage"));
 const CartPage = lazy(() => import("./pages/CartPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -27,8 +27,8 @@ function App() {
                 </>
               }
             ></Route>
-            <Route path="/product/id" element={<ProductDetailPage></ProductDetailPage>}></Route>
-            <Route path="/movies" element={<MoviePage></MoviePage>}></Route>
+            <Route path="/product" element={<ProductPage></ProductPage>}></Route>
+            <Route path="/product/:id" element={<ProductDetailPage></ProductDetailPage>}></Route>
             <Route
               path="/movie/:movieId"
               element={<MovieDetailPage></MovieDetailPage>}

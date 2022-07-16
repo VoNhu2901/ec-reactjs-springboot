@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { apiKey, fetcher, tmdbAPI } from "../components/apiConfig/config";
 import { Swiper } from "swiper/react";
 import { SwiperSlide } from "swiper/react";
-import MovieCard from "./../components/movie/MovieCard";
+import MovieCard from "../components/movie/ProductCard";
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();

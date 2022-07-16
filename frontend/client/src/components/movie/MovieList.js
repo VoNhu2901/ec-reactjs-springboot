@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import MovieCard, { MovieCardSkeleton } from "./MovieCard";
+import ProductCard, { ProductCardSkeleton } from "./ProductCard";
 import useSWR from "swr";
 import { apiKey, fetcher } from "../apiConfig/config";
 import { tmdbAPI } from "../apiConfig/config";
@@ -23,16 +23,16 @@ const MovieList = ({ type = "now_playing" }) => {
               slidesPerView={"auto"}
             >
               <SwiperSlide>
-                <MovieCardSkeleton></MovieCardSkeleton>
+                <ProductCardSkeleton></ProductCardSkeleton>
               </SwiperSlide>
               <SwiperSlide>
-                <MovieCardSkeleton></MovieCardSkeleton>
+                <ProductCardSkeleton></ProductCardSkeleton>
               </SwiperSlide>
               <SwiperSlide>
-                <MovieCardSkeleton></MovieCardSkeleton>
+                <ProductCardSkeleton></ProductCardSkeleton>
               </SwiperSlide>
               <SwiperSlide>
-                <MovieCardSkeleton></MovieCardSkeleton>
+                <ProductCardSkeleton></ProductCardSkeleton>
               </SwiperSlide>
             </Swiper>
           </>
@@ -43,7 +43,7 @@ const MovieList = ({ type = "now_playing" }) => {
           {movies.length > 0 &&
             movies.map((item) => (
               <SwiperSlide key={item.id}>
-                <MovieCard item={item} />
+                <ProductCard item={item} />
               </SwiperSlide>
             ))}
         </Swiper>

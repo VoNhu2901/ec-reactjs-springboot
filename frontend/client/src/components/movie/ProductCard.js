@@ -4,37 +4,41 @@ import Button from "../button/Button";
 import { tmdbAPI } from '../apiConfig/config';
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
-import LoadingSkeleton from './../../loading/LoadingSkeleton';
+import LoadingSkeleton from '../../loading/LoadingSkeleton';
 
-const MovieCard = ({ item }) => {
-  const { id, title, release_date, poster_path, vote_average } = item;
+const ProductCard = ({ item }) => {
+  // const { id, title, release_date, poster_path, vote_average } = item;
+  const { proId, name, price, thumbnail, rate } = item; 
+  // Format VND JavaScript
+  const priceFormat = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  const rateFormat = Math.floor(rate * 10) / 10;
+  // end format
   const navigate = useNavigate();
   return (
     <>
       <div
         className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 h-full select-none"
-        key={id}
+        key={proId}
       >
         <img
-          src={tmdbAPI.img500(poster_path)}
+          src={thumbnail}
           alt="img"
           className="w-full h-[250px] object-cover rounded-lg mb-5"
         />
         <div className="flex flex-col flex-1">
-          <h3 className="font-bold text-xl mb-3">{title}</h3>
+          <h3 className="font-bold text-xl mb-3">{name}</h3>
           <div className="flex items-center justify-between opacity-50 mb-10 ">
-            <span>{new Date(release_date).getFullYear()}</span>
-            <span>{vote_average}</span>
+            <span>{priceFormat} VND</span>
+            <span>{rateFormat}</span>
           </div>
 
           <Button
             onClick={() => {
-              navigate(`/movie/${id}`);
+              navigate(`/product/${proId}`);
             }}
           >
             But Now
           </Button>
-          
         </div>
       </div>
     </>
@@ -43,12 +47,12 @@ const MovieCard = ({ item }) => {
 
 
 // Bổ sung thêm cho biết 
-MovieCard.propTypes = {
+ProductCard.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
     release_date: PropTypes.string,
-    poster_path:  PropTypes.string,
+    poster_path: PropTypes.string,
     vote_average: PropTypes.number,
   }),
 };
@@ -58,9 +62,9 @@ function FallbackComponent() {
   return <p className="bg-red-50 text-red-50">Something went wrong with this components</p>
 }
 
-export default withErrorBoundary(MovieCard, FallbackComponent);
+export default withErrorBoundary(ProductCard, FallbackComponent);
 
-export const MovieCardSkeleton = () => {
+export const ProductCardSkeleton = () => {
 return (
   <>
     <div className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 h-full select-none">

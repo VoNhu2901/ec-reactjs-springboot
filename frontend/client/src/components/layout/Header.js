@@ -20,7 +20,7 @@ const Header = () => {
             Home
           </NavLink>
           <NavLink
-            to="/movies"
+            to="/product"
             className={({ isActive }) => (isActive ? "text-primary" : "")}
           >
             Sản phẩm

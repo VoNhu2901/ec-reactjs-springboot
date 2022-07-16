@@ -1,52 +1,83 @@
-import React from "react";
-import { loginFields } from "utils/formFields";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import Input from "components/input/Input";
-import FormExtra from './FormExtra';
+import { useForm } from "react-hook-form";
+import FormExtra from "./FormExtra";
 import FormAction from "./FormAction";
+import AuthService from "services/AuthService";
+import { Navigate } from "react-router-dom";
 
-const fields = loginFields;
-let fieldsState = {};
-fields.forEach((field) => (fieldsState[field.id] = ""));
+const fixedInputClass =
+  "mb-15 rounded-md appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm";
+
+const submitClass = "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 mt-10";
 
 const Login = () => {
-  const [loginState, setLoginState] = useState(fieldsState);
+  const {
+    register,
+    handleSubmit
+  } = useForm();
+  const [role, setRole] = useState();
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
-  const handleChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+  const onSubmit = (data) => {
+    AuthService.login(data)
+      .then((res) => {
+        sessionStorage.clear();
+        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("accId", res.data.accId);
+        localStorage.setItem("username", res.data.username);
+        setRole(res.data.role);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(data);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    authenticateUser();
-  };
-
-  //Handle Login API Integration here
-  const authenticateUser = () => { };
-  
   return (
-    <div className="h-80 flex justify-center">
-      <form className="mt-2 space-y-6 w-[500px]">
-        <div className="-space-y-px ">
-          {fields.map((field) => (
-            <Input
-              key={field.id}
-              handleChange={handleChange}
-              value={loginState[field.id]}
-              labelText={field.labelText}
-              labelFor={field.labelFor}
-              id={field.id}
-              name={field.name}
-              type={field.type}
-              isRequired={field.isRequired}
-              placeholder={field.placeholder}
+    <>
+      <div className="h-80 flex justify-center">
+        {role === "USER" && <Navigate to={"/"}></Navigate>}
+        {role === "ADMIN" && <Navigate to={"/admin"}></Navigate>}
+        <form
+          className="mt-2 space-y-6 w-[500px] "
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="-space-y-px ">
+            <label htmlFor="username">Username</label>
+            <input
+              {...register("username", {
+                required: true,
+                maxLength: 20,
+              })}
+              type="text"
+              placeholder="Username"
+              className={fixedInputClass}
             />
-          ))}
-        </div>
-        <FormExtra />
-        <FormAction handleSubmit={handleSubmit} text="Login" />
-      </form>
-    </div>
+
+            <label htmlFor="password">Password</label>
+            <input
+              {...register("password", {
+                required: true,
+                maxLength: 20,
+              })}
+              type="password"
+              placeholder="Password"
+              className={fixedInputClass}
+            />
+          </div>
+
+          <FormExtra />
+          <input
+            type="submit"
+            className={submitClass}
+            value={"Log In"}
+          />
+        </form>
+      </div>
+    </>
   );
 };
 

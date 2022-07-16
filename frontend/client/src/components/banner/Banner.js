@@ -14,7 +14,7 @@ const Banner = () => {
     (async () => {
       try {
         const response = await ProductService.getAllProducts();
-        console.log(response.data);
+        // console.log(response.data);
         setMovies(response.data);
       } catch (error) {
         console.log(error.message);
