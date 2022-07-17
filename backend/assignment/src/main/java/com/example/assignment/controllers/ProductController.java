@@ -1,6 +1,5 @@
 package com.example.assignment.controllers;
 
-import com.example.assignment.data.entities.Product;
 import com.example.assignment.dto.request.ProductCreateDto;
 import com.example.assignment.dto.response.ProductResponseDto;
 import com.example.assignment.dto.response.ProductSimpleResponseDto;
@@ -36,11 +35,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductResponseDto getProductById(@PathVariable("id") int id) {
         return this.productService.getProductById(id);
-    }
-
-    @GetMapping("/top")
-    public List<Product> getProductByRate() {
-        return this.productService.getProductByRate();
     }
 
     @GetMapping("/category/{cateId}")

@@ -9,7 +9,7 @@ export const API_ROUTES = {
   CREATE_PRODUCT: "/product/create",
   DELETE_PRODUCT: "/product/delete/:id",
   //category
-  GET_ALL_CATEGORIES: "/category",
+  GET_ALL_CATEGORIES: "/category", //use
   GET_CATEGORY_BY_ID: "/category/:id",
   UPDATE_CATEGORY: "/category/update",
   CREATE_CATEGORY: "/category/create",
@@ -17,7 +17,9 @@ export const API_ROUTES = {
   //rate
   GET_ALL_RATES: "/rate/all",
   ADD_NEW_RATE: "/rate",
-
+  // cart
+  GET_CART_BY_ACC_ID: "/cart/", //use
+  ADD_PRODUCT_TO_CART: "/cart", //use
   //image
   DELETE_PRODUCT_IMAGE: "/product-image/delete/:id",
   //user

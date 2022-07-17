@@ -55,10 +55,10 @@ public class Utils {
         }
 
         // calculate average of rate
-        for(ProductRate rate: listRate){
+        for (ProductRate rate : listRate) {
             result += rate.getRate();
         }
-        return result/listRate.size();
+        return result / listRate.size();
     }
 
 }

@@ -23,13 +23,13 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
         return new MessageResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
-    @ExceptionHandler({ ResourceAlreadyExistsException.class })
+    @ExceptionHandler({ResourceAlreadyExistsException.class})
     protected MessageResponse handleResourceAlreadyExistsException(RuntimeException exception,
                                                                    WebRequest request) {
         return new MessageResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 
-    @ExceptionHandler({ Unauthorized.class })
+    @ExceptionHandler({Unauthorized.class})
     protected MessageResponse handleForbiddenException(RuntimeException exception,
                                                        WebRequest request) {
         return new MessageResponse(HttpStatus.FORBIDDEN, exception.getMessage());
@@ -41,10 +41,10 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders header, HttpStatus status, WebRequest request){
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders header, HttpStatus status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
         exception.getBindingResult().getAllErrors().forEach((err) -> {
-            String field = ((FieldError)err).getField();
+            String field = ((FieldError) err).getField();
             String message = err.getDefaultMessage();
             errors.put(field, message);
         });

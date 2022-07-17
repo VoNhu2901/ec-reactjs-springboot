@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "account", uniqueConstraints = { @UniqueConstraint(columnNames = "username") })
+@Table(name = "account", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class Account {
 
     @Id
@@ -63,5 +63,4 @@ public class Account {
     }
 
 
-    
 }

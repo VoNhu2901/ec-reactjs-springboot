@@ -38,7 +38,7 @@ const onSubmit = (data) => {
  
   return (
     <>
-      {role === "USER" && <Navigate to={"/"}></Navigate>}
+      {role === "USER" && <Navigate to={"/product"}></Navigate>}
       {role === "ADMIN" && <Navigate to={"/admin"}></Navigate>}
       <div className="flex justify-center mb-16">
         {error && <div className="text-primary">{error}</div>}

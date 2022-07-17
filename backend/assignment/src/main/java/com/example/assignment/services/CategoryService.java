@@ -8,13 +8,13 @@ import java.util.List;
 
 
 public interface CategoryService {
-    public List<CategoryResponseDto> getAllCategory();
+    List<CategoryResponseDto> getAllCategory();
 
-    public CategoryResponseDto createNewCategory(CategoryCreateDto dto);
+    CategoryResponseDto createNewCategory(CategoryCreateDto dto);
 
-    public CategoryResponseDto updateCategory(int id, CategoryCreateDto dto);
+    CategoryResponseDto updateCategory(int id, CategoryCreateDto dto);
 
-    public CategoryResponseDto updateCategoryStatus(int id);
+    CategoryResponseDto updateCategoryStatus(int id);
 
-    public CategoryResponseDto getCategoryById(int id);
+    CategoryResponseDto getCategoryById(int id);
 }

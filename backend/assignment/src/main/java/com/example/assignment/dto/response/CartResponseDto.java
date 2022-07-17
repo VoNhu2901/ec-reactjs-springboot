@@ -10,7 +10,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class CartResponseDto {
-    private int id;
     Set<CartItemResponseDto> cartItems;
+    private int id;
 
 }

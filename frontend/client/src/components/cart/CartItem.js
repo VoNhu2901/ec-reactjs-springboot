@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ProductService from "services/ProductService";
 
-const CartItem = () => {
+const CartItem = ({ item }, props) => {
+  const { proId, name, price, quantity } = item;
+  const priceFormat = price
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  const [newQuantity, setNewQuantity] = useState(quantity);
+  const [productImages, setProductImages] = useState([]);
+
+  const getTotalPrice = () => {
+    let totalPrice = 0;
+    totalPrice += price * quantity;
+    return totalPrice;
+  };
+
+  const totalPriceFormat = getTotalPrice()
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+  useEffect(() => {
+    ProductService.getProductById(proId).then((res) => {
+      setProductImages(res.data.productImages);
+    });
+  }, [proId]);
+
   return (
     <>
       <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
@@ -8,18 +32,27 @@ const CartItem = () => {
         <div className="flex w-2/5">
           {/* image */}
           <div className="w-20">
-            <img
-              className="h-24"
-              src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z"
-              alt=""
-            />
+            {productImages.length > 0 ? (
+              <img
+                src={productImages[0].imgUrl}
+                alt={name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src="https://via.placeholder.com/150"
+                alt={name}
+                className="w-full h-full object-cover"
+              />
+            )}
+            <img className="h-24" src={productImages.imgUrl} alt="" />
           </div>
           {/* title */}
           <div className="flex flex-col justify-between ml-4 flex-grow">
-            <span className="font-bold text-sm">Iphone 6S</span>
+            <span className="font-bold text-sm">{name}</span>
             <span className="text-red-500 text-xs">Apple</span>
             <a
-              href="#"
+              href="null"
               className="font-semibold hover:text-red-500 text-gray-500 text-xs"
             >
               Remove
@@ -36,7 +69,8 @@ const CartItem = () => {
           <input
             className="mx-2 border text-center w-8"
             type="text"
-            value="1"
+            value={newQuantity}
+            onChange={(e) => setNewQuantity(e.target.value)}
           />
 
           <svg className="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
@@ -45,10 +79,14 @@ const CartItem = () => {
         </div>
 
         {/* price */}
-        <span className="text-center w-1/5 font-semibold text-sm">$400.00</span>
+        <span className="text-center w-1/5 font-semibold text-sm">
+          {priceFormat} VND
+        </span>
 
         {/* total */}
-        <span className="text-center w-1/5 font-semibold text-sm">$400.00</span>
+        <span className="text-center w-1/5 font-semibold text-sm">
+          {totalPriceFormat} VND
+        </span>
       </div>
     </>
   );

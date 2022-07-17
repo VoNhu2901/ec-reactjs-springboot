@@ -7,12 +7,12 @@ import com.example.assignment.exceptions.handlers.MessageResponse;
 
 public interface CartService {
 
-    public CartResponseDto getCartByAccount(int accId);
+    CartResponseDto getCartByAccount(int accId);
 
-    public MessageResponse addProductToCart(CartItemCreateDto dto);
+    MessageResponse addProductToCart(CartItemCreateDto dto);
 
-    public MessageResponse updateQuantityProduct(CartItemCreateDto dto);
+    MessageResponse updateQuantityProduct(CartItemCreateDto dto);
 
-    public MessageResponse deleteProductOutOfCart(int proId, int cartId);
+    MessageResponse deleteProductOutOfCart(int proId, int cartId);
 
 }

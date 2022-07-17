@@ -19,5 +19,5 @@ public class ProductImageServiceImpl implements ProductImageService {
         return new MessageResponse(HttpStatus.ACCEPTED, "Delete.image.successfully");
 
     }
-    
+
 }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "product_image")
 public class ProductImage {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

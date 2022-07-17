@@ -41,7 +41,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> product;
-    
+
 
     public Category(int id) {
         this.id = id;
@@ -53,7 +53,7 @@ public class Category {
         this.description = description;
     }
 
-    public Category(String name, String description){
+    public Category(String name, String description) {
         this.name = name;
         this.description = description;
     }

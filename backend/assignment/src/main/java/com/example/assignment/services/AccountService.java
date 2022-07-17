@@ -7,12 +7,12 @@ import com.example.assignment.exceptions.handlers.MessageResponse;
 import java.util.List;
 
 public interface AccountService {
-    public List<AccountResponseDto> getAllAccount();
+    List<AccountResponseDto> getAllAccount();
 
-    public AccountResponseDto getAccountById(int id);
+    AccountResponseDto getAccountById(int id);
 
-    public MessageResponse deleteAccount(int id);
+    MessageResponse deleteAccount(int id);
 
-    public MessageResponse updateAccount(int id, RegisterRequestDto dto);
+    MessageResponse updateAccount(int id, RegisterRequestDto dto);
 
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee saveEmployee(Employee employee) {
 
         Optional<Employee> savedEmployee = employeeRepository.findByEmail(employee.getEmail());
-        if(savedEmployee.isPresent()){
+        if (savedEmployee.isPresent()) {
             throw new ResourceNotFoundException("Employee already exist with given email:" + employee.getEmail());
         }
         return employeeRepository.save(employee);

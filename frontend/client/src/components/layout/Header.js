@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
+  const [username, setUsername] = useState();
+
+  useEffect(() => {
+    const isExistUsername = localStorage.getItem("username");
+    if (isExistUsername) {
+      setUsername(isExistUsername);
+    }
+  }
+    , []);
+  
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    setUsername(null);
+    window.location.reload();
+  }
+
   return (
     <>
-      <header className="header flex justify-between gap-x-5 flex-nowrap text-white py-10 mb-5">
+      <header className="header flex justify-between gap-x-5 flex-nowrap text-white py-10 mb-5 ">
         <div className="flex items-center justify-center gap-x-5">
           <NavLink to="/" className="text-white">
             <img
@@ -23,35 +39,55 @@ const Header = () => {
             to="/product"
             className={({ isActive }) => (isActive ? "text-primary" : "")}
           >
-            Sản phẩm
-          </NavLink>
-          <NavLink
-            to="/product/id"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Chi tiet
-          </NavLink>
-          <NavLink
-            to="/cart"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Cart
+            Product
           </NavLink>
         </div>
-        <div className="flex items-center justify-center gap-x-5">
-          <NavLink
-            to="/login"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Log In
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className={({ isActive }) => (isActive ? "text-primary" : "")}
-          >
-            Sign Up
-          </NavLink>
-        </div>
+
+        {username ? (
+          <>
+            <div className="flex items-center justify-center gap-5">
+              <div className="flex items-center justify-center border border-primary px-4 py-2 rounded-full">
+                {username}
+              </div>
+
+              <NavLink
+                to="/cart"
+                className={({ isActive }) => (isActive ? "text-primary" : "")}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + "/assets/cart.png"}
+                  alt="logo"
+                  className="w-10"
+                />
+              </NavLink>
+
+              <img
+                src={process.env.PUBLIC_URL + "/assets/logout.png"}
+                alt="logo"
+                className="w-8 cursor-pointer"
+                onClick={handleLogout}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center justify-center gap-x-2 border border-primary px-5 rounded-full">
+              <NavLink
+                to="/login"
+                className={({ isActive }) => (isActive ? "text-primary" : "")}
+              >
+                Log In
+              </NavLink>
+              /
+              <NavLink
+                to="/signup"
+                className={({ isActive }) => (isActive ? "text-primary" : "")}
+              >
+                Sign Up
+              </NavLink>
+            </div>
+          </>
+        )}
       </header>
     </>
   );

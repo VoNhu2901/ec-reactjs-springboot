@@ -31,7 +31,7 @@ public class Cart {
     @Column(name = "create_date")
     @CreationTimestamp
     private Date createDate;
-    
+
     @ManyToOne
     @JoinColumn(name = "acc_id")
     private Account account;

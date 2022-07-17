@@ -54,7 +54,7 @@ public class Product {
     @JoinColumn(name = "cate_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ProductRate> productRates;
 
 }

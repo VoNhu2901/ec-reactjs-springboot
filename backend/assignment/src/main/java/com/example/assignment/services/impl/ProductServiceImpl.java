@@ -47,9 +47,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto getProductById(int id) {
-        Optional<Product> productOptional =  this.productRepository.findById(id);
-        if(productOptional.isPresent()){
-            Product product  = productOptional.get();
+        Optional<Product> productOptional = this.productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
             ProductResponseDto res = new ProductResponseDto();
             modelMapper.map(product, res);
             res.setRate(Utils.rate(product.getProductRates()));
@@ -58,10 +58,6 @@ public class ProductServiceImpl implements ProductService {
         throw new ResourceNotFoundException(Utils.PRODUCT_NOT_FOUND);
     }
 
-    @Override
-    public List<Product> getProductByRate() {
-        return null;
-    }
     @Override
     public List<ProductSimpleResponseDto> getProductByCategory(int cateId) {
         Category category = this.categoryRepository.findById(cateId).orElseThrow(ResourceNotFoundException::new);

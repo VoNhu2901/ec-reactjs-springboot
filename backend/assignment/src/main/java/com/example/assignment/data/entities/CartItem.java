@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "cart_item")
 @IdClass(CartItemId.class)
-public class CartItem implements Serializable{
+public class CartItem implements Serializable {
 
     @Id
     @Column(name = "cart_id")
@@ -25,7 +25,7 @@ public class CartItem implements Serializable{
 
     @Column(name = "quantity")
     private int quantity;
-    
+
     @ManyToOne
     @JoinColumn(name = "cart_id", insertable = false, updatable = false)
     private Cart cart;

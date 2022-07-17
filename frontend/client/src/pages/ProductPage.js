@@ -19,6 +19,7 @@ const ProductPage = () => {
   const [proId, setProId] = useState();
   const [sortBy, setSortBy] = useState(0);
   const [activePage, setActivePage] = useState(1);
+  
   // ===============pagination=====================
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
@@ -90,7 +91,7 @@ const ProductPage = () => {
     <>
       {/* filter */}
       <div className="">
-        {proId && <Navigate to={`/home/view/${proId}`} />}
+        {proId && <Navigate to={`/product/${proId}`} />}
 
         <div className="float-left text-black">
           {/* category */}
@@ -114,13 +115,15 @@ const ProductPage = () => {
           {/* sort */}
           <label
             htmlFor="sorting"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+            className="block mb-2 text-sm font-medium text-gray-400 dark:text-gray-400"
           >
             Select an option
           </label>
           <select
             id="sorting"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            value={sortBy}
+            onChange={sort}
           >
             <option defaultValue={0}>All</option>
             <option value={1}>Prices Increase</option>
@@ -177,8 +180,8 @@ const ProductPage = () => {
         <div className="grid grid-cols-4 gap-10 page-container">
           {!loading &&
             product.length > 0 &&
-            product.map((item) => (
-              <ProductCard key={item.id} item={item}></ProductCard>
+            product.map((item, index) => (
+              <ProductCard key={index} item={item}></ProductCard>
             ))}
         </div>
 

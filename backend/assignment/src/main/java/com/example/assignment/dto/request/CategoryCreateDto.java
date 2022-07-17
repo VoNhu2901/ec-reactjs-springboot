@@ -7,11 +7,12 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryCreateDto {
-    
+
     @NotBlank(message = "Category name is required")
     private String cateName;
 

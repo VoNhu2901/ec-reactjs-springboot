@@ -33,13 +33,12 @@ const Login = () => {
       .catch((err) => {
         console.log(err);
       });
-    console.log(data);
   };
 
   return (
     <>
       <div className="h-80 flex justify-center">
-        {role === "USER" && <Navigate to={"/"}></Navigate>}
+        {role === "USER" && <Navigate to={"/product"}></Navigate>}
         {role === "ADMIN" && <Navigate to={"/admin"}></Navigate>}
         <form
           className="mt-2 space-y-6 w-[500px] "

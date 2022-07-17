@@ -7,10 +7,10 @@ import com.example.assignment.exceptions.handlers.MessageResponse;
 import java.util.List;
 
 public interface ProductRateService {
-    public MessageResponse createNewRate(ProductRateCreateDto dto);
+    MessageResponse createNewRate(ProductRateCreateDto dto);
 
-    public List<ProductRateResponseDto> getRatesByProductId(int proId, boolean status);
+    List<ProductRateResponseDto> getRatesByProductId(int proId, boolean status);
 
-    public MessageResponse changeStatus(int rateId);
+    MessageResponse changeStatus(int rateId);
 
 }

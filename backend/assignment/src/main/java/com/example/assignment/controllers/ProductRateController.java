@@ -1,8 +1,8 @@
 package com.example.assignment.controllers;
 
 import com.example.assignment.dto.request.ProductRateCreateDto;
-import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.dto.response.ProductRateResponseDto;
+import com.example.assignment.exceptions.handlers.MessageResponse;
 import com.example.assignment.services.ProductRateService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

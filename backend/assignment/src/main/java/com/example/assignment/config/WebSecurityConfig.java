@@ -63,7 +63,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/category", "/api/v1/product").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/v1/product/**").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.PATCH, "/api/v1/product/**", "/api/v1/rate/**").hasAnyAuthority("ADMIN")
-                .antMatchers( "/api/v1/image/**", "/api/v1/account").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/image/**", "/api/v1/account").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/v1/cart", "/api/v1/cart/**", "/api/v1/account/**", "/api/v1/rate").hasAnyAuthority("USER")
 
                 .anyRequest().permitAll();

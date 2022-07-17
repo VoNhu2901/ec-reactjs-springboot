@@ -1,12 +1,14 @@
+import Button from "components/button/Button";
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from "react-router-dom";
 import ProductService from "services/ProductService";
 import RateService from "services/RateService";
+import CartService from "./../services/CartService";
 
 const ProductDetailPage = () => {
   let { id } = useParams();
   const [product, setProduct] = useState();
-  const [newRate, setNewRate] = useState();
+  const [newRate, setNewRate] = useState(10);
   const [newComment, setNewComment] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -14,11 +16,10 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
     if (id) {
-      ProductService.getProductById(id).then(res => {
+      ProductService.getProductById(id).then((res) => {
         setProduct(res.data);
-        console.log(res.data);
-      }
-      );
+        // console.log(res.data);
+      });
     }
 
     if (localStorage.getItem("accId") !== null) {
@@ -45,175 +46,159 @@ const ProductDetailPage = () => {
       });
   };
 
+  const addToCart = (e, id) => {
+    e.preventDefault();
+    let cartId = localStorage.getItem("cartId");
+    let accId = localStorage.getItem("accId");
+    if (!accId) {
+      alert("Please login to add to cart");
+    }
+
+    if (!cartId) {
+      CartService.getCartByAccId(accId)
+        .then((res) => {
+          localStorage.setItem("cartId", res.data.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (quantity === 0) {
+      alert("Quantity must not be 0");
+    }
+
+    const data = {
+      proId: id,
+      cartId: localStorage.getItem("cartId"),
+      quantity: quantity,
+    };
+
+    CartService.addProductToCart(data)
+      .then((res) => {
+        alert(res.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  if (!product) {
+    return (
+      <div>
+        <img
+          src={process.env.PUBLIC_URL + "/assets/empty_cart.png"}
+          alt="empty_cart"
+        />
+      </div>
+    );
+  }
+
+  const {
+    productImages,
+    price,
+    category,
+    name,
+    rate,
+    productRates,
+    description,
+    proId,
+  } = product;
+  const priceFormat = price
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+  //display rate
+  const totalStar = [];
+  for (let i = 1; i <= rate; i++) {
+    totalStar.push(
+      <svg
+        key={i}
+        fill="currentColor"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        className="w-4 h-4 text-red-500"
+        viewBox="0 0 24 24"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+      </svg>
+    );
+  }
+  // end display rate
+
   return (
     <>
       {/* <!-- detail --> */}
       <section className=" body-font overflow-hidden text-white">
         <div className="container px-5 py-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img
-              alt="ecommerce"
-              className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-              src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"
-            />
+            {(productImages || []).map((image, index) => {
+              return (
+                <img
+                  key={index}
+                  alt="ecommerce"
+                  className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+                  src={image.imgUrl}
+                />
+              );
+            })}
+
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                BRAND NAME
+              <h2 className="text-sm title-font text-secondary tracking-widest uppercase">
+                {category.name}
               </h2>
-              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                The Catcher in the Rye
-              </h1>
+              <h1 className="text-3xl title-font font-medium mb-1">{name}</h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
-                  <svg
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-4 h-4 text-red-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                  <svg
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-4 h-4 text-red-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                  <svg
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-4 h-4 text-red-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                  <svg
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-4 h-4 text-red-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    className="w-4 h-4 text-red-500"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                  </svg>
-                  <span className="text-gray-600 ml-3">4 Reviews</span>
-                </span>
-                <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
-                  <a className="text-gray-500">
-                    <svg
-                      fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                    </svg>
-                  </a>
-                  <a className="ml-2 text-gray-500">
-                    <svg
-                      fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                    </svg>
-                  </a>
-                  <a className="ml-2 text-gray-500">
-                    <svg
-                      fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                    </svg>
-                  </a>
+                  {totalStar}
+                  <span className="text-gray-600 ml-3">
+                    {productRates.length} Reviews
+                  </span>
                 </span>
               </div>
-              <p className="leading-relaxed">
-                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-                juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-                seitan poutine tumeric. Gastropub blue bottle austin listicle
-                pour-over, neutra jean shorts keytar banjo tattooed umami
-                cardigan.
-              </p>
-              <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                <div className="flex">
-                  <span className="mr-3">Color</span>
-                  <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                  <button className="border-2 border-gray-300 ml-1 bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>
-                </div>
-                <div className="flex ml-6 items-center">
-                  <span className="mr-3">Size</span>
-                  <div className="relative">
-                    <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
-                      <option>SM</option>
-                      <option>M</option>
-                      <option>L</option>
-                      <option>XL</option>
-                    </select>
-                    <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-4 h-4"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M6 9l6 6 6-6"></path>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <p className="leading-relaxed">{description}</p>
+
               <div className="flex">
-                <span className="title-font font-medium text-2xl text-gray-900">
-                  $58.00
+                <span className="title-font font-medium text-2xl text-primary inline-block mt-5">
+                  {priceFormat} VND
                 </span>
-                <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                  Button
+                {/* quantity */}
+                <div className="ml-auto">
+                  <label
+                    for="quantity"
+                    class="form-label inline-block mb-2 text-gray-400"
+                  >
+                    Quantity
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    className="form-control block px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded selection:focus:border-blue-600 focus:outline-none"
+                    id="quantity"
+                    placeholder="Number input"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex mt-20">
+                <button
+                  className="flex ml-auto text-white h-10 bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                  onClick={(e) => {
+                    addToCart(e, proId);
+                  }}
+                >
+                  Add to cart
                 </button>
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-5 h-5"
                     viewBox="0 0 24 24"
                   >
@@ -228,32 +213,101 @@ const ProductDetailPage = () => {
       {/* end detail */}
 
       {/* comment */}
-      <div className="container rounded-lg shadow-md shadow-blue-600/50 mb-10 pt-5 text-black">
-        {/* display comment */}
-        <div className="bg-gray-100 p-2 m-4 rounded-md ">comment nay</div>
+      <section className="flex items-center justify-center">
+        <div className="container mx-auto px-5 rounded-lg shadow-md shadow-blue-600/100 mb-10 pt-5 text-black">
+          {/* display comment */}
+          {(productRates || []).map((item, index) => {
+            return (
+              <>
+                <span className="flex items-center gap-3">
+                  <span className="text-gray-400 ml-auto">{item.rate}</span>
+                  <svg
+                    key={index}
+                    fill="currentColor"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    className="w-4 h-4 text-red-500 mr-3"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                  </svg>
+                </span>
+                <div className="bg-blue-200 p-2 m-4 rounded-md ">
+                  {item.comment}
+                </div>
+              </>
+            );
+          })}
 
-        {/* form comment */}
-        <form action="" className="w-full p-4 ">
-          <div className="mb-2 ">
-            <label for="comment" className="text-lg text-white">
-              Add a comment
-            </label>
-            <textarea
-              className="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 bg-blue-200"
-              name="comment"
-              placeholder=""
-            ></textarea>
-          </div>
-          <div>
-            <button className="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded">
-              Comment
-            </button>
-            <button className="px-3 py-2 text-sm text-blue-600 border border-blue-500 rounded">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+          {/* form comment */}
+          {isLogin ? (
+            <>
+              <form action="" className="w-full p-4 ">
+                <div className="mb-2 ">
+                  {/* Comment */}
+                  <label htmlFor="comment" className="text-lg text-white">
+                    Add a comment
+                  </label>
+                  <textarea
+                    className="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 "
+                    name="comment"
+                    placeholder="Good product..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                  ></textarea>
+                  {/* Vote */}
+                  <div className="ml-auto">
+                    <label
+                      for="quantity"
+                      class="form-label inline-block mb-2 text-gray-400"
+                    >
+                      Star (between 1 and 10)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="10"
+                      className="form-control block px-3 py-1.5 text-base font-normal text-gray-700 border border-solid border-gray-300 rounded selection:focus:border-blue-600 focus:outline-none"
+                      id="quantity"
+                      placeholder="Number input"
+                      value={newRate}
+                      onChange={(e) => setNewRate(e.target.value)}
+                    />
+                  </div>
+
+                  <p className="text-red-600 text-sm mt-5">
+                    Announce: {success ? success : "You have not commented yet"}
+                  </p>
+                </div>
+                <div>
+                  <button
+                    className="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded"
+                    onClick={postComment}
+                  >
+                    Comment
+                  </button>
+                  <button className="px-3 py-2 text-sm text-blue-600 border border-blue-500 rounded float-right">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </>
+          ) : (
+            <div className="flex items-center justify-center">
+              <p className="text-center text-secondary">
+                You need to login to comment
+              </p>
+              <div className="p-2 m-4">
+                <NavLink to="/login">
+                  <Button className="text-white">Login now</Button>
+                </NavLink>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
       {/* end comment */}
     </>
   );

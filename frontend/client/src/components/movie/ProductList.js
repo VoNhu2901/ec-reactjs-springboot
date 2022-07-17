@@ -4,12 +4,34 @@ import ProductCard, { ProductCardSkeleton } from "./ProductCard";
 import useSWR from "swr";
 import { apiKey, fetcher } from "../apiConfig/config";
 import { tmdbAPI } from "../apiConfig/config";
+import CategoryService from "services/CategoryService";
+import ProductService from "services/ProductService";
 
-const MovieList = ({ type = "now_playing" }) => {
-  const { data, error } = useSWR(tmdbAPI.getMovieList(type), fetcher);
-  const isLoading = !data && !error;
+const ProductList = ({ type = "now_playing" }) => {
+  const [cate, setCate] = useState([]);
+  const [selected, setSelected] = useState(0);
+  const [product, setProduct] = useState([]);
 
-  const movies = data?.results || [];
+
+  const isLoading = !product;
+
+
+const getData = async () => {
+  CategoryService.getAllCategories().then((res) => {
+    setCate(res.data);
+  });
+
+  const id = selected === 0 ? "all" : selected;
+  ProductService.getAllProductTradingByCateId(id).then((res) => {
+    setProduct(res.data);
+  });
+};
+
+useEffect(() => {
+  getData();
+}, [selected]);
+
+
 
   return (
     <>
@@ -40,8 +62,8 @@ const MovieList = ({ type = "now_playing" }) => {
         {/* end skeleton */}
 
         <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-          {movies.length > 0 &&
-            movies.map((item) => (
+          {product.length > 0 &&
+            product.map((item) => (
               <SwiperSlide key={item.id}>
                 <ProductCard item={item} />
               </SwiperSlide>
@@ -52,4 +74,4 @@ const MovieList = ({ type = "now_playing" }) => {
   );
 };
 
-export default MovieList;
+export default ProductList;

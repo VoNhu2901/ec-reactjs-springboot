@@ -29,10 +29,10 @@ function App() {
             ></Route>
             <Route path="/product" element={<ProductPage></ProductPage>}></Route>
             <Route path="/product/:id" element={<ProductDetailPage></ProductDetailPage>}></Route>
-            <Route
+            {/* <Route
               path="/movie/:movieId"
               element={<MovieDetailPage></MovieDetailPage>}
-            ></Route>
+            ></Route> */}
             <Route path="/cart" element={<CartPage></CartPage>}></Route>
             <Route path="/login" element={<LoginPage></LoginPage>}></Route>
             <Route path="/signup" element={<SignUpPage></SignUpPage>}></Route>
