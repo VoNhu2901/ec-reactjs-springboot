@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { apiKey, fetcher, tmdbAPI } from "../components/apiConfig/config";
 import ProductCard, {
   ProductCardSkeleton,
-} from "../components/movie/ProductCard";
+} from "../components/product/ProductCard";
 import useDebounce from "../hooks/useDebounce";
 import ReactPaginate from "react-paginate";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import CategoryService from "services/CategoryService";
 import ProductService from "services/ProductService";
 
@@ -19,7 +17,7 @@ const ProductPage = () => {
   const [proId, setProId] = useState();
   const [sortBy, setSortBy] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  
+
   // ===============pagination=====================
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);

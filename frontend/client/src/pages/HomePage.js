@@ -1,6 +1,6 @@
 import CategoryCard from "components/category/CategoryCard";
 import React from "react";
-import ProductList from "../components/movie/ProductList";
+import ProductList from "../components/product/ProductList";
 // import Banner from './../components/banner/Banner';
 
 const HomePage = () => {

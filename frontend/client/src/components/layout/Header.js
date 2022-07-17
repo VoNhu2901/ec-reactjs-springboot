@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [username, setUsername] = useState();
+   const navigate = useNavigate();
 
   useEffect(() => {
     const isExistUsername = localStorage.getItem("username");
@@ -15,7 +16,8 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("username");
     setUsername(null);
-    window.location.reload();
+      navigate("/login", { replace: true });
+
   }
 
   return (

@@ -1,14 +1,21 @@
 import { API_ROUTES } from "utils/ApiRouteConstants";
 import request from "utils/request";
 
-
 const AccountService = {
   getAllUsers: async () => {
-    const response = await request.get(API_ROUTES.GET_ALL_USERS);
+    const response = await request.get(API_ROUTES.GET_ALL_USERS, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return response;
   },
   getUserById: async (id) => {
-    const response = await request.get(API_ROUTES.GET_USER_BY_ID + id);
+    const response = await request.get(API_ROUTES.GET_USER_BY_ID + id, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return response;
   },
   updateUser: async (user) => {
@@ -22,7 +29,7 @@ const AccountService = {
   deleteUser: async (id) => {
     const response = await request.delete(API_ROUTES.DELETE_USER + id);
     return response;
-  }
-}
+  },
+};
 
 export default AccountService;

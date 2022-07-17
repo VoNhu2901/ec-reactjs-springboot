@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard, { ProductCardSkeleton } from "./ProductCard";
-import useSWR from "swr";
-import { apiKey, fetcher } from "../apiConfig/config";
-import { tmdbAPI } from "../apiConfig/config";
 import CategoryService from "services/CategoryService";
 import ProductService from "services/ProductService";
 
@@ -63,8 +60,8 @@ useEffect(() => {
 
         <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
           {product.length > 0 &&
-            product.map((item) => (
-              <SwiperSlide key={item.id}>
+            product.map((item, index) => (
+              <SwiperSlide key={index}>
                 <ProductCard item={item} />
               </SwiperSlide>
             ))}

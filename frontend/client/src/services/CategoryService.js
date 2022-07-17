@@ -1,4 +1,3 @@
-import React from 'react';
 import request from './../utils/request';
 import { API_ROUTES } from 'utils/ApiRouteConstants';
 

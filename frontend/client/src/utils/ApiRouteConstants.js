@@ -2,7 +2,7 @@ export const API_URL = "http://localhost:8080/api/v1";
 export const API_ROUTES = {
   //product
   GET_ALL_PRODUCTS: "/product/all", //use
-  GET_ALL_PRODUCT_TRADING_BY_CATE_ID: "/product/category/",  //use
+  GET_ALL_PRODUCT_TRADING_BY_CATE_ID: "/product/category/", //use
   GET_PRODUCT_BY_ID: "/product/", //use
   GET_PRODUCT_BY_CATEGORY: "/product/category/:categoryId",
   UPDATE_PRODUCT: "/product/update",
@@ -22,12 +22,12 @@ export const API_ROUTES = {
   ADD_PRODUCT_TO_CART: "/cart", //use
   //image
   DELETE_PRODUCT_IMAGE: "/product-image/delete/:id",
-  //user
-  GET_ALL_USERS: "/user/all",
-  GET_USER_BY_ID: "/user/:id",
-  UPDATE_USER: "/user/update",
-  CREATE_USER: "/user/create",
-  DELETE_USER: "/user/delete/:id",
+  //account
+  GET_ALL_USERS: "/account", //use
+  GET_USER_BY_ID: "/account/", //use
+  UPDATE_USER: "/account/update",
+  CREATE_USER: "/account/create",
+  DELETE_USER: "/account/delete/:id",
   //order
   GET_ALL_ORDERS: "/order/all",
   GET_ORDER_BY_ID: "/order/:id",

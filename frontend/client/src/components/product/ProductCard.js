@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../button/Button";
-import { tmdbAPI } from '../apiConfig/config';
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
 import LoadingSkeleton from '../../loading/LoadingSkeleton';

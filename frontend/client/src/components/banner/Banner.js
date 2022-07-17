@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useSWR from "swr";
-import { fetcher } from "../apiConfig/config";
 import { SwiperSlide } from "swiper/react";
 import { Swiper } from "swiper/react";
 import { useNavigate } from "react-router-dom";
@@ -8,33 +6,28 @@ import Button from "./../button/Button";
 import ProductService from "./../../services/ProductService";
 
 const Banner = () => {
-  const [movies, setMovies] = useState([]);
+  const [product, setProduct] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const response = await ProductService.getAllProducts();
         // console.log(response.data);
-        setMovies(response.data);
+        setProduct(response.data);
       } catch (error) {
         console.log(error.message);
       }
     })();
   }, []);
 
-  // const { data } = useSWR(
-  //   `https://api.themoviedb.org/3/movie/upcoming?api_key=43730f5bb9f1852e5e560e74083b21d4`,
-  //   fetcher
-  // );
-  // const movies = data?.results || [];
 
   return (
     <>
       <section className="banner h-[500px] page-container mb-20 select-none overflow-hidden">
         <Swiper grabCursor="true" slidesPerView={"auto"}>
-          {movies.length > 0 &&
-            movies.map((item) => (
-              <SwiperSlide key={item.id}>
+          {product.length > 0 &&
+            product.map((item) => (
+              <SwiperSlide key={item.proId}>
                 <BannerItem item={item}></BannerItem>
               </SwiperSlide>
             ))}
@@ -45,7 +38,7 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
-  const { id, name, productImages, category } = item;
+  const { proId, name, productImages, category } = item;
   const navigate = useNavigate();
 
   return (
@@ -66,7 +59,7 @@ function BannerItem({ item }) {
           </div>
           <Button
             onClick={() => {
-              navigate(`/movie/${id}`);
+              navigate(`/product/${proId}`);
             }}
           >
             Buy now
